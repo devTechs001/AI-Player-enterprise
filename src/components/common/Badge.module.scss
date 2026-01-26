@@ -1,0 +1,81 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* Variants */
+.default {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+}
+
+.primary {
+  background: var(--primary-500);
+  color: white;
+}
+
+.secondary {
+  background: var(--secondary-500);
+  color: white;
+}
+
+.success {
+  background: var(--accent-green);
+  color: white;
+}
+
+.warning {
+  background: var(--accent-orange);
+  color: white;
+}
+
+.danger {
+  background: var(--accent-red);
+  color: white;
+}
+
+.info {
+  background: var(--primary-300);
+  color: var(--text-primary);
+}
+
+.dark {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+}
+
+.light {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* Sizes */
+.sm {
+  padding: var(--space-1) var(--space-2);
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.md {
+  padding: var(--space-1) var(--space-3);
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.lg {
+  padding: var(--space-2) var(--space-4);
+  min-width: 24px;
+  min-height: 24px;
+}

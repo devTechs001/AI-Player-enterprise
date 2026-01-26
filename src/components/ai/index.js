@@ -1,0 +1,11 @@
+export { default as AIChat } from './AIChat';
+export { default as RecommendationPanel } from './RecommendationPanel';
+export { default as ContentAnalysis } from './ContentAnalysis';
+export { default as AutoSubtitle } from './AutoSubtitle';
+export { default as SmartSearch } from './SmartSearch';
+export { default as ObjectDetection } from './ObjectDetection';
+export { default as FaceRecognition } from './FaceRecognition';
+export { default as SceneDetection } from './SceneDetection';
+export { default as SentimentAnalysis } from './SentimentAnalysis';
+export { default as AIEnhancement } from './AIEnhancement';
+export { default as VoiceCommands } from './VoiceCommands';

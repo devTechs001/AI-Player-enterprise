@@ -1,0 +1,464 @@
+🎬 AI Video Player Enterprise - Complete React 18 Vite Project
+📁 Document Structure
+
+ai-video-player/
+├── 📁 public/
+│   ├── 📁 assets/
+│   │   ├── 📁 images/
+│   │   ├── 📁 icons/
+│   │   └── 📁 videos/
+│   ├── favicon.ico
+│   └── manifest.json
+│
+├── 📁 src/
+│   ├── 📁 api/
+│   │   ├── auth.api.js
+│   │   ├── video.api.js
+│   │   ├── download.api.js
+│   │   ├── subscription.api.js
+│   │   ├── admin.api.js
+│   │   ├── collaboration.api.js
+│   │   ├── music.api.js
+│   │   ├── ai.api.js
+│   │   └── index.js
+│   │
+│   ├── 📁 assets/
+│   │   ├── 📁 images/
+│   │   ├── 📁 icons/
+│   │   ├── 📁 fonts/
+│   │   ├── 📁 animations/
+│   │   └── 📁 sounds/
+│   │
+│   ├── 📁 components/
+│   │   ├── 📁 common/
+│   │   │   ├── 📁 Button/
+│   │   │   ├── 📁 Input/
+│   │   │   ├── 📁 Modal/
+│   │   │   ├── 📁 Card/
+│   │   │   ├── 📁 Loader/
+│   │   │   ├── 📁 Toast/
+│   │   │   ├── 📁 Dropdown/
+│   │   │   ├── 📁 Tooltip/
+│   │   │   ├── 📁 Badge/
+│   │   │   ├── 📁 Avatar/
+│   │   │   ├── 📁 Tabs/
+│   │   │   ├── 📁 Pagination/
+│   │   │   ├── 📁 SearchBar/
+│   │   │   ├── 📁 ProgressBar/
+│   │   │   ├── 📁 Switch/
+│   │   │   ├── 📁 Slider/
+│   │   │   ├── 📁 Alert/
+│   │   │   ├── 📁 Skeleton/
+│   │   │   ├── 📁 EmptyState/
+│   │   │   ├── 📁 ErrorBoundary/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 layout/
+│   │   │   ├── 📁 Header/
+│   │   │   ├── 📁 Footer/
+│   │   │   ├── 📁 Sidebar/
+│   │   │   ├── 📁 MobileNav/
+│   │   │   ├── 📁 MainLayout/
+│   │   │   ├── 📁 DashboardLayout/
+│   │   │   ├── 📁 AuthLayout/
+│   │   │   ├── 📁 AdminLayout/
+│   │   │   ├── 📁 PlayerLayout/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 player/
+│   │   │   ├── 📁 VideoPlayer/
+│   │   │   ├── 📁 AudioPlayer/
+│   │   │   ├── 📁 PlayerControls/
+│   │   │   ├── 📁 VolumeControl/
+│   │   │   ├── 📁 PlaybackSpeed/
+│   │   │   ├── 📁 QualitySelector/
+│   │   │   ├── 📁 Subtitles/
+│   │   │   ├── 📁 Timeline/
+│   │   │   ├── 📁 Thumbnail/
+│   │   │   ├── 📁 PictureInPicture/
+│   │   │   ├── 📁 FullscreenToggle/
+│   │   │   ├── 📁 MiniPlayer/
+│   │   │   ├── 📁 Playlist/
+│   │   │   ├── 📁 Chapters/
+│   │   │   ├── 📁 Theater/
+│   │   │   ├── 📁 Equalizer/
+│   │   │   ├── 📁 VideoEffects/
+│   │   │   ├── 📁 ScreenRecorder/
+│   │   │   ├── 📁 Screenshot/
+│   │   │   ├── 📁 KeyboardShortcuts/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 downloader/
+│   │   │   ├── 📁 DownloadModal/
+│   │   │   ├── 📁 FormatSelector/
+│   │   │   ├── 📁 QualitySelector/
+│   │   │   ├── 📁 DownloadProgress/
+│   │   │   ├── 📁 DownloadHistory/
+│   │   │   ├── 📁 BatchDownload/
+│   │   │   ├── 📁 URLParser/
+│   │   │   ├── 📁 DownloadQueue/
+│   │   │   ├── 📁 ConversionOptions/
+│   │   │   ├── 📁 ScheduleDownload/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 auth/
+│   │   │   ├── 📁 LoginForm/
+│   │   │   ├── 📁 RegisterForm/
+│   │   │   ├── 📁 ForgotPassword/
+│   │   │   ├── 📁 ResetPassword/
+│   │   │   ├── 📁 SocialAuth/
+│   │   │   ├── 📁 TwoFactorAuth/
+│   │   │   ├── 📁 GuestBanner/
+│   │   │   ├── 📁 EmailVerification/
+│   │   │   ├── 📁 ProtectedRoute/
+│   │   │   ├── 📁 GuestRoute/
+│   │   │   ├── 📁 RoleGuard/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 dashboard/
+│   │   │   ├── 📁 StatCard/
+│   │   │   ├── 📁 Chart/
+│   │   │   ├── 📁 RecentActivity/
+│   │   │   ├── 📁 QuickActions/
+│   │   │   ├── 📁 Notifications/
+│   │   │   ├── 📁 UsageStats/
+│   │   │   ├── 📁 StorageWidget/
+│   │   │   ├── 📁 ActivityFeed/
+│   │   │   ├── 📁 WelcomeBanner/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 subscription/
+│   │   │   ├── 📁 PricingCard/
+│   │   │   ├── 📁 FeatureList/
+│   │   │   ├── 📁 PaymentForm/
+│   │   │   ├── 📁 BillingHistory/
+│   │   │   ├── 📁 PlanComparison/
+│   │   │   ├── 📁 CouponInput/
+│   │   │   ├── 📁 UpgradePrompt/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 admin/
+│   │   │   ├── 📁 UserManagement/
+│   │   │   ├── 📁 Analytics/
+│   │   │   ├── 📁 ContentModeration/
+│   │   │   ├── 📁 SystemSettings/
+│   │   │   ├── 📁 AuditLogs/
+│   │   │   ├── 📁 Reports/
+│   │   │   ├── 📁 RoleManager/
+│   │   │   ├── 📁 SystemHealth/
+│   │   │   ├── 📁 APIKeys/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 collaboration/
+│   │   │   ├── 📁 RoomCreate/
+│   │   │   ├── 📁 ParticipantsList/
+│   │   │   ├── 📁 Chat/
+│   │   │   ├── 📁 SyncControls/
+│   │   │   ├── 📁 ScreenShare/
+│   │   │   ├── 📁 Reactions/
+│   │   │   ├── 📁 Polls/
+│   │   │   ├── 📁 Invite/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 music/
+│   │   │   ├── 📁 MusicCard/
+│   │   │   ├── 📁 AlbumView/
+│   │   │   ├── 📁 ArtistView/
+│   │   │   ├── 📁 PlaylistManager/
+│   │   │   ├── 📁 NowPlaying/
+│   │   │   ├── 📁 Lyrics/
+│   │   │   ├── 📁 Visualizer/
+│   │   │   ├── 📁 Queue/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 ai/
+│   │   │   ├── 📁 AIChat/
+│   │   │   ├── 📁 RecommendationPanel/
+│   │   │   ├── 📁 ContentAnalysis/
+│   │   │   ├── 📁 AutoSubtitle/
+│   │   │   ├── 📁 SmartSearch/
+│   │   │   ├── 📁 ObjectDetection/
+│   │   │   ├── 📁 FaceRecognition/
+│   │   │   ├── 📁 SceneDetection/
+│   │   │   ├── 📁 SentimentAnalysis/
+│   │   │   ├── 📁 AIEnhancement/
+│   │   │   ├── 📁 VoiceCommands/
+│   │   │   └── index.js
+│   │   │
+│   │   └── 📁 devs/
+│   │       ├── 📁 CodeBlock/
+│   │       ├── 📁 APIExplorer/
+│   │       ├── 📁 Sandbox/
+│   │       ├── 📁 Documentation/
+│   │       ├── 📁 SDKDownload/
+│   │       ├── 📁 Webhooks/
+│   │       └── index.js
+│   │
+│   ├── 📁 config/
+│   │   ├── constants.js
+│   │   ├── routes.js
+│   │   ├── api.config.js
+│   │   ├── player.config.js
+│   │   ├── theme.config.js
+│   │   ├── download.config.js
+│   │   ├── ai.config.js
+│   │   └── index.js
+│   │
+│   ├── 📁 context/
+│   │   ├── AuthContext.jsx
+│   │   ├── ThemeContext.jsx
+│   │   ├── PlayerContext.jsx
+│   │   ├── DownloadContext.jsx
+│   │   ├── NotificationContext.jsx
+│   │   ├── MusicContext.jsx
+│   │   ├── CollaborationContext.jsx
+│   │   ├── AIContext.jsx
+│   │   └── index.js
+│   │
+│   ├── 📁 hooks/
+│   │   ├── useAuth.js
+│   │   ├── usePlayer.js
+│   │   ├── useDownload.js
+│   │   ├── useAI.js
+│   │   ├── useWebSocket.js
+│   │   ├── useLocalStorage.js
+│   │   ├── useDebounce.js
+│   │   ├── useMediaQuery.js
+│   │   ├── useIntersectionObserver.js
+│   │   ├── useKeyboardShortcuts.js
+│   │   ├── useFullscreen.js
+│   │   ├── usePictureInPicture.js
+│   │   ├── useNotification.js
+│   │   ├── useCollaboration.js
+│   │   ├── useMusic.js
+│   │   ├── useTheme.js
+│   │   ├── useAnalytics.js
+│   │   ├── useClipboard.js
+│   │   ├── useFileUpload.js
+│   │   └── index.js
+│   │
+│   ├── 📁 pages/
+│   │   ├── 📁 Splash/
+│   │   │   ├── Splash.jsx
+│   │   │   ├── Splash.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Home/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Home.module.scss
+│   │   │   ├── 📁 components/
+│   │   │   │   ├── Hero.jsx
+│   │   │   │   ├── FeaturedVideos.jsx
+│   │   │   │   ├── Categories.jsx
+│   │   │   │   ├── Trending.jsx
+│   │   │   │   └── Testimonials.jsx
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Features/
+│   │   │   ├── Features.jsx
+│   │   │   ├── Features.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Status/
+│   │   │   ├── Status.jsx
+│   │   │   ├── Status.module.scss
+│   │   │   ├── 📁 components/
+│   │   │   │   ├── Roadmap.jsx
+│   │   │   │   ├── Changelog.jsx
+│   │   │   │   ├── SystemStatus.jsx
+│   │   │   │   └── Incidents.jsx
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 About/
+│   │   │   ├── About.jsx
+│   │   │   ├── About.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Contact/
+│   │   │   ├── Contact.jsx
+│   │   │   ├── Contact.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Auth/
+│   │   │   ├── 📁 Login/
+│   │   │   ├── 📁 Register/
+│   │   │   ├── 📁 ForgotPassword/
+│   │   │   ├── 📁 ResetPassword/
+│   │   │   ├── 📁 Verify/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Dashboard/
+│   │   │   ├── 📁 Overview/
+│   │   │   ├── 📁 Videos/
+│   │   │   ├── 📁 Downloads/
+│   │   │   ├── 📁 Music/
+│   │   │   ├── 📁 History/
+│   │   │   ├── 📁 Favorites/
+│   │   │   ├── 📁 Playlists/
+│   │   │   ├── 📁 Library/
+│   │   │   ├── 📁 Analytics/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Player/
+│   │   │   ├── 📁 VideoPlayer/
+│   │   │   ├── 📁 MusicPlayer/
+│   │   │   ├── 📁 LiveStream/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Profile/
+│   │   │   ├── 📁 Overview/
+│   │   │   ├── 📁 Settings/
+│   │   │   ├── 📁 Security/
+│   │   │   ├── 📁 Preferences/
+│   │   │   ├── 📁 Notifications/
+│   │   │   ├── 📁 Privacy/
+│   │   │   ├── 📁 Devices/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Subscription/
+│   │   │   ├── 📁 Plans/
+│   │   │   ├── 📁 Checkout/
+│   │   │   ├── 📁 Billing/
+│   │   │   ├── 📁 Success/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Admin/
+│   │   │   ├── 📁 Dashboard/
+│   │   │   ├── 📁 Users/
+│   │   │   ├── 📁 Content/
+│   │   │   ├── 📁 Analytics/
+│   │   │   ├── 📁 Settings/
+│   │   │   ├── 📁 Logs/
+│   │   │   ├── 📁 Reports/
+│   │   │   ├── 📁 Moderation/
+│   │   │   ├── 📁 API/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Devs/
+│   │   │   ├── 📁 API/
+│   │   │   ├── 📁 Documentation/
+│   │   │   ├── 📁 Sandbox/
+│   │   │   ├── 📁 Changelog/
+│   │   │   ├── 📁 SDKs/
+│   │   │   ├── 📁 Examples/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Collaboration/
+│   │   │   ├── 📁 Rooms/
+│   │   │   ├── 📁 WatchParty/
+│   │   │   ├── 📁 SharedPlaylists/
+│   │   │   ├── 📁 Live/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Music/
+│   │   │   ├── 📁 Library/
+│   │   │   ├── 📁 Albums/
+│   │   │   ├── 📁 Artists/
+│   │   │   ├── 📁 Radio/
+│   │   │   ├── 📁 Playlists/
+│   │   │   ├── 📁 Discover/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Download/
+│   │   │   ├── Download.jsx
+│   │   │   ├── Download.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Search/
+│   │   │   ├── Search.jsx
+│   │   │   ├── Search.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 Legal/
+│   │   │   ├── 📁 Terms/
+│   │   │   ├── 📁 Privacy/
+│   │   │   ├── 📁 DMCA/
+│   │   │   └── index.js
+│   │   │
+│   │   ├── 📁 NotFound/
+│   │   │   ├── NotFound.jsx
+│   │   │   ├── NotFound.module.scss
+│   │   │   └── index.js
+│   │   │
+│   │   └── 📁 Error/
+│   │       ├── Error.jsx
+│   │       ├── Error.module.scss
+│   │       └── index.js
+│   │
+│   ├── 📁 services/
+│   │   ├── api.service.js
+│   │   ├── auth.service.js
+│   │   ├── video.service.js
+│   │   ├── download.service.js
+│   │   ├── ai.service.js
+│   │   ├── websocket.service.js
+│   │   ├── analytics.service.js
+│   │   ├── storage.service.js
+│   │   ├── notification.service.js
+│   │   ├── encryption.service.js
+│   │   ├── media.service.js
+│   │   ├── ffmpeg.service.js
+│   │   └── index.js
+│   │
+│   ├── 📁 store/
+│   │   ├── 📁 slices/
+│   │   │   ├── authSlice.js
+│   │   │   ├── playerSlice.js
+│   │   │   ├── downloadSlice.js
+│   │   │   ├── uiSlice.js
+│   │   │   ├── musicSlice.js
+│   │   │   ├── notificationSlice.js
+│   │   │   ├── collaborationSlice.js
+│   │   │   └── adminSlice.js
+│   │   ├── store.js
+│   │   └── index.js
+│   │
+│   ├── 📁 styles/
+│   │   ├── 📁 base/
+│   │   │   ├── _reset.scss
+│   │   │   ├── _typography.scss
+│   │   │   ├── _variables.scss
+│   │   │   └── _globals.scss
+│   │   ├── 📁 components/
+│   │   ├── 📁 pages/
+│   │   ├── 📁 themes/
+│   │   │   ├── _dark.scss
+│   │   │   ├── _light.scss
+│   │   │   └── _neon.scss
+│   │   ├── 📁 utils/
+│   │   │   ├── _mixins.scss
+│   │   │   ├── _animations.scss
+│   │   │   └── _helpers.scss
+│   │   └── main.scss
+│   │
+│   ├── 📁 utils/
+│   │   ├── helpers.js
+│   │   ├── formatters.js
+│   │   ├── validators.js
+│   │   ├── encryption.js
+│   │   ├── mediaUtils.js
+│   │   ├── dateUtils.js
+│   │   ├── urlUtils.js
+│   │   ├── fileUtils.js
+│   │   ├── errorHandler.js
+│   │   └── index.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── routes.jsx
+│
+├── 📁 tests/
+│   ├── 📁 unit/
+│   ├── 📁 integration/
+│   └── 📁 e2e/
+│
+├── .env
+├── .env.example
+├── .eslintrc.cjs
+├── .prettierrc
+├── .gitignore
+├── index.html
+├── package.json
+├── README.md
+├── vite.config.js
+└── jsconfig.json

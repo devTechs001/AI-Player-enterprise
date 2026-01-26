@@ -1,17 +1,5 @@
 # Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Build outputs
-dist/
-build/
-*.tsbuildinfo
 
 # Environment variables
 .env
@@ -20,36 +8,62 @@ build/
 .env.test.local
 .env.production.local
 
+# Build outputs
+dist/
+build/
+/.vite
+/.cache
+*.tsbuildinfo
+
 # IDE and Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
-.env.*.local
 *.sublime-project
 *.sublime-workspace
 
 # OS files
-Thumbs.db
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+Thumbs.db
 ehthumbs.db
+Icon?
+.nfs*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Testing
 coverage/
 .nyc_output/
+*.lcov
 
 # Misc
 .cache/
 .parcel-cache
 dist-ssr/
 *.local
+*.pid
+*.pid.lock
+*.seed
+tmp/
+temp/
 
-# Logs
-logs/
-*.log
+# ESLint/Prettier cache
+.eslintcache
+.prettiercache
+
+# Package locks (keep only one)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

@@ -1,0 +1,11 @@
+.visualizer {
+  width: 200px;
+  height: 60px;
+  background: transparent;
+  border-radius: var(--radius-md);
+
+  &.small {
+    width: 100px;
+    height: 30px;
+  }
+}
