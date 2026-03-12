@@ -1,6 +1,5 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '@hooks/useAuth'
 
 // Layouts
 import MainLayout from '@components/layout/MainLayout'
@@ -14,31 +13,25 @@ import ProtectedRoute from '@components/auth/ProtectedRoute'
 import GuestRoute from '@components/auth/GuestRoute'
 import RoleGuard from '@components/auth/RoleGuard'
 
-// Smart Root Redirect Component
-const RootRedirect = () => {
-  const { isAuthenticated, isLoading } = useAuth()
-  if (isLoading) return null
-  return <Navigate to={isAuthenticated ? '/dashboard' : '/'} replace />
-}
-
-// Pages - Lazy loaded
+// ==================== PUBLIC PAGES (Landing) ====================
 const Splash = lazy(() => import('@pages/Splash'))
 const Home = lazy(() => import('@pages/Home'))
 const Features = lazy(() => import('@pages/Features'))
-const Status = lazy(() => import('@pages/Status'))
+const Pricing = lazy(() => import('@pages/Subscription/Plans'))
 const About = lazy(() => import('@pages/About'))
 const Contact = lazy(() => import('@pages/Contact'))
 const Download = lazy(() => import('@pages/Download'))
 const Search = lazy(() => import('@pages/Search'))
+const Status = lazy(() => import('@pages/Status'))
 
-// Auth Pages
+// ==================== AUTH PAGES ====================
 const Login = lazy(() => import('@pages/Auth/Login'))
 const Register = lazy(() => import('@pages/Auth/Register'))
 const ForgotPassword = lazy(() => import('@pages/Auth/ForgotPassword'))
 const ResetPassword = lazy(() => import('@pages/Auth/ResetPassword'))
 const Verify = lazy(() => import('@pages/Auth/Verify'))
 
-// Dashboard Pages
+// ==================== DASHBOARD PAGES (Protected) ====================
 const DashboardOverview = lazy(() => import('@pages/Dashboard/Overview'))
 const DashboardVideos = lazy(() => import('@pages/Dashboard/Videos'))
 const DashboardDownloads = lazy(() => import('@pages/Dashboard/Downloads'))
@@ -49,12 +42,7 @@ const DashboardPlaylists = lazy(() => import('@pages/Dashboard/Playlists'))
 const DashboardLibrary = lazy(() => import('@pages/Dashboard/Library'))
 const DashboardAnalytics = lazy(() => import('@pages/Dashboard/Analytics'))
 
-// Player Pages
-const VideoPlayer = lazy(() => import('@pages/Player/VideoPlayer'))
-const MusicPlayer = lazy(() => import('@pages/Player/MusicPlayer'))
-const LiveStream = lazy(() => import('@pages/Player/LiveStream'))
-
-// Profile Pages
+// ==================== PROFILE PAGES (Protected) ====================
 const ProfileOverview = lazy(() => import('@pages/Profile/Overview'))
 const ProfileSettings = lazy(() => import('@pages/Profile/Settings'))
 const ProfileSecurity = lazy(() => import('@pages/Profile/Security'))
@@ -63,13 +51,17 @@ const ProfileNotifications = lazy(() => import('@pages/Profile/Notifications'))
 const ProfilePrivacy = lazy(() => import('@pages/Profile/Privacy'))
 const ProfileDevices = lazy(() => import('@pages/Profile/Devices'))
 
-// Subscription Pages
-const Plans = lazy(() => import('@pages/Subscription/Plans'))
+// ==================== PLAYER PAGES ====================
+const VideoPlayer = lazy(() => import('@pages/Player/VideoPlayer'))
+const MusicPlayer = lazy(() => import('@pages/Player/MusicPlayer'))
+const LiveStream = lazy(() => import('@pages/Player/LiveStream'))
+
+// ==================== SUBSCRIPTION (Mixed) ====================
 const Checkout = lazy(() => import('@pages/Subscription/Checkout'))
 const Billing = lazy(() => import('@pages/Subscription/Billing'))
 const SubscriptionSuccess = lazy(() => import('@pages/Subscription/Success'))
 
-// Admin Pages
+// ==================== ADMIN PAGES (Protected + Role) ====================
 const AdminDashboard = lazy(() => import('@pages/Admin/Dashboard'))
 const AdminUsers = lazy(() => import('@pages/Admin/Users'))
 const AdminContent = lazy(() => import('@pages/Admin/Content'))
@@ -80,7 +72,7 @@ const AdminReports = lazy(() => import('@pages/Admin/Reports'))
 const AdminModeration = lazy(() => import('@pages/Admin/Moderation'))
 const AdminAPI = lazy(() => import('@pages/Admin/API'))
 
-// Developer Pages
+// ==================== DEVELOPER PAGES ====================
 const DevsAPI = lazy(() => import('@pages/Devs/API'))
 const DevsDocumentation = lazy(() => import('@pages/Devs/Documentation'))
 const DevsSandbox = lazy(() => import('@pages/Devs/Sandbox'))
@@ -88,13 +80,13 @@ const DevsChangelog = lazy(() => import('@pages/Devs/Changelog'))
 const DevsSDKs = lazy(() => import('@pages/Devs/SDKs'))
 const DevsExamples = lazy(() => import('@pages/Devs/Examples'))
 
-// Collaboration Pages
+// ==================== COLLABORATION PAGES (Protected) ====================
 const CollaborationRooms = lazy(() => import('@pages/Collaboration/Rooms'))
 const WatchParty = lazy(() => import('@pages/Collaboration/WatchParty'))
 const SharedPlaylists = lazy(() => import('@pages/Collaboration/SharedPlaylists'))
 const Live = lazy(() => import('@pages/Collaboration/Live'))
 
-// Music Pages
+// ==================== MUSIC PAGES (Protected) ====================
 const MusicLibrary = lazy(() => import('@pages/Music/Library'))
 const MusicAlbums = lazy(() => import('@pages/Music/Albums'))
 const MusicArtists = lazy(() => import('@pages/Music/Artists'))
@@ -102,42 +94,43 @@ const MusicRadio = lazy(() => import('@pages/Music/Radio'))
 const MusicPlaylists = lazy(() => import('@pages/Music/Playlists'))
 const MusicDiscover = lazy(() => import('@pages/Music/Discover'))
 
-// Legal Pages
+// ==================== LEGAL PAGES ====================
 const Terms = lazy(() => import('@pages/Legal/Terms'))
 const Privacy = lazy(() => import('@pages/Legal/Privacy'))
 const DMCA = lazy(() => import('@pages/Legal/DMCA'))
 
-// Error Pages
+// ==================== ERROR PAGES ====================
 const NotFound = lazy(() => import('@pages/NotFound'))
 const Error = lazy(() => import('@pages/Error'))
 
+// ==================== ROUTE CONFIGURATION ====================
 export const routes = [
-  // Splash
+  // 1. SPLASH SCREEN (First load)
   {
     path: '/splash',
     element: <Splash />,
   },
 
-  // Main Layout Routes
+  // 2. PUBLIC LANDING PAGES (Anyone can view)
   {
     path: '/',
     element: <MainLayout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'features', element: <Features /> },
-      { path: 'status', element: <Status /> },
-      { path: 'about', element: <About /> },
-      { path: 'contact', element: <Contact /> },
-      { path: 'download', element: <Download /> },
-      { path: 'search', element: <Search /> },
-      { path: 'plans', element: <Plans /> },
-      { path: 'terms', element: <Terms /> },
-      { path: 'privacy', element: <Privacy /> },
-      { path: 'dmca', element: <DMCA /> },
+      { index: true, element: <Home /> },                    // Landing page
+      { path: 'features', element: <Features /> },           // Features showcase
+      { path: 'pricing', element: <Pricing /> },             // Pricing plans
+      { path: 'about', element: <About /> },                 // About us
+      { path: 'contact', element: <Contact /> },             // Contact form
+      { path: 'download', element: <Download /> },           // Download tool
+      { path: 'search', element: <Search /> },               // Search
+      { path: 'status', element: <Status /> },               // System status
+      { path: 'terms', element: <Terms /> },                 // Terms of service
+      { path: 'privacy', element: <Privacy /> },             // Privacy policy
+      { path: 'dmca', element: <DMCA /> },                   // DMCA
     ],
   },
 
-  // Auth Layout Routes (Guest only - redirects if logged in)
+  // 3. AUTH PAGES (Guest only - redirects to dashboard if logged in)
   {
     path: '/login',
     element: <GuestRoute><AuthLayout /></GuestRoute>,
@@ -174,7 +167,7 @@ export const routes = [
     ],
   },
 
-  // Dashboard Layout Routes
+  // 4. DASHBOARD (Protected - requires login)
   {
     path: '/dashboard',
     element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
@@ -191,7 +184,7 @@ export const routes = [
     ],
   },
 
-  // Profile Routes
+  // 5. PROFILE (Protected - requires login)
   {
     path: '/profile',
     element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
@@ -206,7 +199,7 @@ export const routes = [
     ],
   },
 
-  // Subscription Routes
+  // 6. SUBSCRIPTION (Checkout & Billing - Protected)
   {
     path: '/subscription',
     element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
@@ -217,7 +210,7 @@ export const routes = [
     ],
   },
 
-  // Player Layout Routes
+  // 7. PLAYER (Video/Music playback)
   {
     path: '/player',
     element: <PlayerLayout />,
@@ -228,7 +221,7 @@ export const routes = [
     ],
   },
 
-  // Collaboration Routes
+  // 8. COLLABORATION (Protected - Watch parties, etc.)
   {
     path: '/collab',
     element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
@@ -240,7 +233,7 @@ export const routes = [
     ],
   },
 
-  // Music Routes (Protected)
+  // 9. MUSIC LIBRARY (Protected)
   {
     path: '/music',
     element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
@@ -254,7 +247,7 @@ export const routes = [
     ],
   },
 
-  // Developer Routes
+  // 10. DEVELOPER DOCS (Public)
   {
     path: '/devs',
     element: <MainLayout />,
@@ -268,7 +261,7 @@ export const routes = [
     ],
   },
 
-  // Admin Layout Routes
+  // 11. ADMIN PANEL (Protected + Admin Role)
   {
     path: '/admin',
     element: (
@@ -291,7 +284,7 @@ export const routes = [
     ],
   },
 
-  // Error Routes
+  // 12. ERROR PAGES
   { path: '/error', element: <Error /> },
   { path: '*', element: <NotFound /> },
 ]
