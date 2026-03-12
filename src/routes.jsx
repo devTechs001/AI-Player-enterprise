@@ -23,6 +23,12 @@ const Contact = lazy(() => import('@pages/Contact'))
 const Download = lazy(() => import('@pages/Download'))
 const Search = lazy(() => import('@pages/Search'))
 const Status = lazy(() => import('@pages/Status'))
+const Blog = lazy(() => import('@pages/Blog'))
+const Careers = lazy(() => import('@pages/Careers'))
+const Help = lazy(() => import('@pages/Help'))
+const Community = lazy(() => import('@pages/Community'))
+const Cookies = lazy(() => import('@pages/Cookies'))
+const Unauthorized = lazy(() => import('@pages/Unauthorized'))
 
 // ==================== AUTH PAGES ====================
 const Login = lazy(() => import('@pages/Auth/Login'))
@@ -41,6 +47,7 @@ const DashboardFavorites = lazy(() => import('@pages/Dashboard/Favorites'))
 const DashboardPlaylists = lazy(() => import('@pages/Dashboard/Playlists'))
 const DashboardLibrary = lazy(() => import('@pages/Dashboard/Library'))
 const DashboardAnalytics = lazy(() => import('@pages/Dashboard/Analytics'))
+const DashboardDiscover = lazy(() => import('@pages/Dashboard/Discover'))
 
 // ==================== PROFILE PAGES (Protected) ====================
 const ProfileOverview = lazy(() => import('@pages/Profile/Overview'))
@@ -124,10 +131,21 @@ export const routes = [
       { path: 'download', element: <Download /> },           // Download tool
       { path: 'search', element: <Search /> },               // Search
       { path: 'status', element: <Status /> },               // System status
+      { path: 'blog', element: <Blog /> },                   // Blog
+      { path: 'careers', element: <Careers /> },             // Careers
+      { path: 'help', element: <Help /> },                   // Help Center
+      { path: 'community', element: <Community /> },         // Community
+      { path: 'cookies', element: <Cookies /> },             // Cookie policy
       { path: 'terms', element: <Terms /> },                 // Terms of service
       { path: 'privacy', element: <Privacy /> },             // Privacy policy
       { path: 'dmca', element: <DMCA /> },                   // DMCA
     ],
+  },
+
+  // 2b. ERROR/ACCESS PAGES
+  {
+    path: '/unauthorized',
+    element: <Unauthorized />,
   },
 
   // 3. AUTH PAGES (Guest only - redirects to dashboard if logged in)
@@ -181,6 +199,7 @@ export const routes = [
       { path: 'playlists', element: <DashboardPlaylists /> },
       { path: 'library', element: <DashboardLibrary /> },
       { path: 'analytics', element: <DashboardAnalytics /> },
+      { path: 'discover', element: <DashboardDiscover /> },
     ],
   },
 
