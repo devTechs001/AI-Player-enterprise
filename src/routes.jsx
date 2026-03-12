@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
+import { useAuth } from '@hooks/useAuth'
 
 // Layouts
 import MainLayout from '@components/layout/MainLayout'
@@ -12,6 +13,13 @@ import PlayerLayout from '@components/layout/PlayerLayout'
 import ProtectedRoute from '@components/auth/ProtectedRoute'
 import GuestRoute from '@components/auth/GuestRoute'
 import RoleGuard from '@components/auth/RoleGuard'
+
+// Smart Root Redirect Component
+const RootRedirect = () => {
+  const { isAuthenticated, isLoading } = useAuth()
+  if (isLoading) return null
+  return <Navigate to={isAuthenticated ? '/dashboard' : '/'} replace />
+}
 
 // Pages - Lazy loaded
 const Splash = lazy(() => import('@pages/Splash'))
@@ -129,16 +137,40 @@ export const routes = [
     ],
   },
 
-  // Auth Layout Routes
+  // Auth Layout Routes (Guest only - redirects if logged in)
   {
-    path: '/auth',
+    path: '/login',
     element: <GuestRoute><AuthLayout /></GuestRoute>,
     children: [
-      { path: 'login', element: <Login /> },
-      { path: 'register', element: <Register /> },
-      { path: 'forgot-password', element: <ForgotPassword /> },
-      { path: 'reset-password/:token', element: <ResetPassword /> },
-      { path: 'verify/:token', element: <Verify /> },
+      { index: true, element: <Login /> },
+    ],
+  },
+  {
+    path: '/register',
+    element: <GuestRoute><AuthLayout /></GuestRoute>,
+    children: [
+      { index: true, element: <Register /> },
+    ],
+  },
+  {
+    path: '/forgot-password',
+    element: <GuestRoute><AuthLayout /></GuestRoute>,
+    children: [
+      { index: true, element: <ForgotPassword /> },
+    ],
+  },
+  {
+    path: '/reset-password/:token',
+    element: <GuestRoute><AuthLayout /></GuestRoute>,
+    children: [
+      { index: true, element: <ResetPassword /> },
+    ],
+  },
+  {
+    path: '/verify/:token',
+    element: <GuestRoute><AuthLayout /></GuestRoute>,
+    children: [
+      { index: true, element: <Verify /> },
     ],
   },
 
@@ -208,10 +240,10 @@ export const routes = [
     ],
   },
 
-  // Music Routes
+  // Music Routes (Protected)
   {
     path: '/music',
-    element: <DashboardLayout />,
+    element: <ProtectedRoute><DashboardLayout /></ProtectedRoute>,
     children: [
       { index: true, element: <MusicLibrary /> },
       { path: 'albums', element: <MusicAlbums /> },
