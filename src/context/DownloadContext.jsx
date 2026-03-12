@@ -50,7 +50,7 @@ const downloadReducer = (state, action) => {
             : download
         ),
       };
-    case 'COMPLETE_DOWNLOAD':
+    case 'COMPLETE_DOWNLOAD': {
       const completedDownload = state.downloads.find(
         (d) => d.id === action.payload.id
       );
@@ -64,6 +64,7 @@ const downloadReducer = (state, action) => {
         activeDownloads: Math.max(0, state.activeDownloads - 1),
         isProcessing: state.activeDownloads > 1,
       };
+    }
     case 'FAIL_DOWNLOAD':
       return {
         ...state,

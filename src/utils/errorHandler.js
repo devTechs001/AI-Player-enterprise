@@ -26,14 +26,14 @@ export const handleAsyncController = (controllerFn) => {
   };
 };
 
-export const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res) => {
   let { statusCode, message } = err;
 
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.MODE === 'development') {
     console.error(err);
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (import.meta.env.MODE === 'production') {
     if (err.isOperational) {
       statusCode = err.statusCode;
       message = err.message;
@@ -94,7 +94,7 @@ export const formatError = (error) => {
   return {
     message: error.message || 'An unknown error occurred',
     name: error.name || 'Error',
-    stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+    stack: import.meta.env.MODE === 'development' ? error.stack : undefined,
     timestamp: new Date().toISOString(),
     ...(error.statusCode && { statusCode: error.statusCode }),
     ...(error.status && { status: error.status }),

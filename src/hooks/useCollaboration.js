@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CollaborationContext } from ' @context/CollaborationContext';
+import { CollaborationContext } from '@context/CollaborationContext';
 
 export const useCollaboration = () => {
   const context = useContext(CollaborationContext);

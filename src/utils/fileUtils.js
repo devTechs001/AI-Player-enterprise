@@ -287,7 +287,7 @@ export const validateFileType = (file, allowedTypes) => {
 };
 
 export const getMimeTypeFromExtension = (extension) => {
-  const mimeTypes = {
+  const extensionMap = {
     'jpg': 'image/jpeg',
     'jpeg': 'image/jpeg',
     'png': 'image/png',
@@ -298,7 +298,6 @@ export const getMimeTypeFromExtension = (extension) => {
     'tiff': 'image/tiff',
     'mp4': 'video/mp4',
     'webm': 'video/webm',
-    'ogg': 'video/ogg',
     'mkv': 'video/x-matroska',
     'avi': 'video/x-msvideo',
     'mov': 'video/quicktime',
@@ -308,7 +307,6 @@ export const getMimeTypeFromExtension = (extension) => {
     'mpeg': 'video/mpeg',
     'mp3': 'audio/mpeg',
     'wav': 'audio/wav',
-    'ogg': 'audio/ogg',
     'm4a': 'audio/mp4',
     'aac': 'audio/aac',
     'flac': 'audio/flac',
@@ -323,7 +321,13 @@ export const getMimeTypeFromExtension = (extension) => {
     'js': 'application/javascript',
   };
 
-  return mimeTypes[extension.toLowerCase()] || 'application/octet-stream';
+  // Handle 'ogg' specially since it can be both audio and video
+  if (extension.toLowerCase() === 'ogg') {
+    // For now, default to video/ogg, but ideally you'd have more context to determine the type
+    return 'video/ogg';
+  }
+
+  return extensionMap[extension.toLowerCase()] || 'application/octet-stream';
 };
 
 export const generateThumbnail = (file, maxWidth = 200, maxHeight = 200) => {

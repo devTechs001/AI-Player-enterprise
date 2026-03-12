@@ -47,7 +47,7 @@ class DownloadService {
     const chunks = [];
     let receivedLength = 0;
 
-    while (true) {
+    while (true) { // eslint-disable-line no-constant-condition
       const { done, value } = await reader.read();
 
       if (done) break;

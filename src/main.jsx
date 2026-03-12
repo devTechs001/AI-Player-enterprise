@@ -1,30 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { Toaster } from 'react-hot-toast';
+// src/main.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Toaster } from 'react-hot-toast'
 
-import App from './App';
-import { store } from './store';
-import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';
-import { PlayerProvider } from './context/PlayerContext';
-import { DownloadProvider } from './context/DownloadContext';
-import { NotificationProvider } from './context/NotificationContext';
-import ErrorBoundary from './components/common/ErrorBoundary';
+import App from './App'
+import { store } from './store'
+import { ThemeProvider } from './context/ThemeContext'
+import { AuthProvider } from './context/AuthContext'
+import { PlayerProvider } from './context/PlayerContext'
+import { NotificationProvider } from './context/NotificationContext'
+import ErrorBoundary from './components/common/ErrorBoundary'
 
-import './styles/main.scss';
+import './styles/main.scss'
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 30,
+      retry: 3,
       refetchOnWindowFocus: false,
-      retry: 1,
-      staleTime: 5 * 60 * 1000,
     },
   },
-});
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -36,26 +38,27 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <AuthProvider>
                 <NotificationProvider>
                   <PlayerProvider>
-                    <DownloadProvider>
-                      <App />
-                      <Toaster
-                        position="top-right"
-                        toastOptions={{
-                          duration: 4000,
-                          style: {
-                            background: 'var(--bg-secondary)',
-                            color: 'var(--text-primary)',
-                          },
-                        }}
-                      />
-                    </DownloadProvider>
+                    <App />
+                    <Toaster
+                      position="top-right"
+                      toastOptions={{
+                        duration: 4000,
+                        style: {
+                          background: '#1e293b',
+                          color: '#f1f5f9',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(99, 102, 241, 0.2)',
+                        },
+                      }}
+                    />
                   </PlayerProvider>
                 </NotificationProvider>
               </AuthProvider>
             </ThemeProvider>
           </BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Provider>
     </ErrorBoundary>
   </React.StrictMode>
-);
+)

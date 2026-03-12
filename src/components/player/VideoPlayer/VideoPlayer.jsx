@@ -53,7 +53,6 @@ const VideoPlayer = ({
   
   const {
     isPlaying,
-    isPaused,
     currentTime,
     duration,
     volume,
@@ -67,9 +66,7 @@ const VideoPlayer = ({
     currentChapter,
     isBuffering,
     aiAnalysis,
-    
-    play,
-    pause,
+
     togglePlay,
     seek,
     seekRelative,
@@ -84,7 +81,7 @@ const VideoPlayer = ({
   } = usePlayer();
   
   const { isFullscreen, toggleFullscreen } = useFullscreen(containerRef);
-  const { isPiP, togglePiP, isSupported: isPiPSupported } = usePictureInPicture(videoRef);
+  const { togglePiP, isSupported: isPiPSupported } = usePictureInPicture(videoRef);
 
   // Keyboard shortcuts
   useKeyboardShortcuts({

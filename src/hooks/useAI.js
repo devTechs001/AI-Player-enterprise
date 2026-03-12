@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AIContext } from ' @context/AIContext';
+import { AIContext } from '@context/AIContext';
 
 export const useAI = () => {
   const context = useContext(AIContext);

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../layout/Header/Header';
-import Sidebar from '../layout/Sidebar/Sidebar';
-import Footer from '../layout/Footer/Footer';
+import Header from '../Header/Header';
+import Sidebar from '../Sidebar/Sidebar';
+import Footer from '../Footer/Footer';
 import './MainLayout.scss';
 
 const MainLayout = ({ children, showSidebar = true, showHeader = true, showFooter = true }) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiX,
@@ -36,9 +36,9 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
     if (isOpen && url) {
       analyzeMedia();
     }
-  }, [isOpen, url]);
+  }, [isOpen, url, analyzeMedia]);
 
-  const analyzeMedia = async () => {
+  const analyzeMedia = useCallback(async () => {
     setStep('analyzing');
     setError(null);
 
@@ -51,7 +51,7 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
       setError(result.error);
       setStep('error');
     }
-  };
+  }, [url, setStep, setError, setMediaInfo, setSelectedQuality, analyzeURL]);
 
   const handleDownload = async () => {
     setStep('downloading');

@@ -1,4 +1,4 @@
-import { createContext, useReducer, useCallback, useEffect } from 'react';
+import { createContext, useReducer, useCallback } from 'react';
 import { authService } from '@services/auth.service';
 import { storageService } from '@services/storage.service';
 

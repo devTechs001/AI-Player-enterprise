@@ -1,282 +1,231 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
-  FiCheck,
-  FiX,
-  FiZap,
-  FiStar,
-  FiAward,
-  FiArrowRight,
+  FiCheck, FiX, FiZap, FiShield, FiGlobe, FiHeart,
+  FiStar, FiCrown, FiArrowRight
 } from 'react-icons/fi';
-import { useAuth } from '@hooks/useAuth';
 import Button from '@components/common/Button';
-import Switch from '@components/common/Switch';
-import styles from './Plans.module.scss';
+import './Plans.scss';
 
 const plans = [
   {
     id: 'free',
     name: 'Free',
-    description: 'Perfect for casual users',
-    icon: FiStar,
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    color: '#71717a',
+    price: 0,
+    period: 'forever',
+    description: 'Perfect for trying out the platform',
+    icon: FiZap,
+    color: '#64748b',
     features: [
-      { name: '720p Video Quality', included: true },
-      { name: '3 Downloads/day', included: true },
-      { name: 'Basic AI Features', included: true },
-      { name: 'Standard Formats (MP4, MP3)', included: true },
-      { name: '5GB Storage', included: true },
-      { name: 'Ads Supported', included: true },
-      { name: '4K/8K Quality', included: false },
-      { name: 'Watch Party', included: false },
-      { name: 'Priority Support', included: false },
-      { name: 'Advanced AI', included: false },
+      { text: 'Up to 3 downloads/day', included: true },
+      { text: '720p video quality', included: true },
+      { text: 'Basic player features', included: true },
+      { text: 'Limited AI features', included: true },
+      { text: 'Ads supported', included: false },
+      { text: '1080p quality', included: false },
+      { text: 'Offline downloads', included: false },
+      { text: 'Priority support', included: false },
     ],
+    cta: 'Get Started',
+    popular: false,
+  },
+  {
+    id: 'basic',
+    name: 'Basic',
+    price: 9.99,
+    period: 'month',
+    description: 'Great for casual users',
+    icon: FiShield,
+    color: '#3b82f6',
+    features: [
+      { text: 'Unlimited downloads', included: true },
+      { text: '1080p video quality', included: true },
+      { text: 'Ad-free experience', included: true },
+      { text: 'Basic AI features', included: true },
+      { text: 'Offline mode', included: true },
+      { text: '4K quality', included: false },
+      { text: 'Advanced AI tools', included: false },
+      { text: 'Priority support', included: false },
+    ],
+    cta: 'Start Free Trial',
+    popular: false,
   },
   {
     id: 'pro',
     name: 'Pro',
-    description: 'For power users & creators',
-    icon: FiZap,
-    monthlyPrice: 9.99,
-    yearlyPrice: 99.99,
-    popular: true,
-    color: '#3b82f6',
+    price: 19.99,
+    period: 'month',
+    description: 'Best for power users',
+    icon: FiStar,
+    color: '#8b5cf6',
     features: [
-      { name: '4K Video Quality', included: true },
-      { name: 'Unlimited Downloads', included: true },
-      { name: 'Advanced AI Features', included: true },
-      { name: 'All Formats (50+)', included: true },
-      { name: '100GB Storage', included: true },
-      { name: 'Ad-Free Experience', included: true },
-      { name: '8K Quality', included: false },
-      { name: 'Watch Party (5 users)', included: true },
-      { name: 'Email Support', included: true },
-      { name: 'Batch Downloads', included: true },
+      { text: 'Everything in Basic', included: true },
+      { text: '4K Ultra HD quality', included: true },
+      { text: 'Advanced AI features', included: true },
+      { text: 'Auto-subtitles', included: true },
+      { text: 'Video enhancement', included: true },
+      { text: 'Batch downloads', included: true },
+      { text: 'Priority support', included: true },
+      { text: 'API access', included: false },
     ],
+    cta: 'Start Free Trial',
+    popular: true,
   },
   {
     id: 'enterprise',
     name: 'Enterprise',
-    description: 'For teams & businesses',
-    icon: FiAward,
-    monthlyPrice: 29.99,
-    yearlyPrice: 299.99,
-    color: '#8b5cf6',
+    price: 49.99,
+    period: 'month',
+    description: 'For teams and businesses',
+    icon: FiCrown,
+    color: '#f59e0b',
     features: [
-      { name: '8K Video Quality', included: true },
-      { name: 'Unlimited Everything', included: true },
-      { name: 'Full AI Suite', included: true },
-      { name: 'All Formats + Custom', included: true },
-      { name: 'Unlimited Storage', included: true },
-      { name: 'Ad-Free + White Label', included: true },
-      { name: 'Watch Party (Unlimited)', included: true },
-      { name: 'Priority 24/7 Support', included: true },
-      { name: 'API Access', included: true },
-      { name: 'Custom Integrations', included: true },
+      { text: 'Everything in Pro', included: true },
+      { text: '8K quality support', included: true },
+      { text: 'Full API access', included: true },
+      { text: 'Custom integrations', included: true },
+      { text: 'Team management', included: true },
+      { text: 'Analytics dashboard', included: true },
+      { text: 'Dedicated support', included: true },
+      { text: 'SLA guarantee', included: true },
     ],
+    cta: 'Contact Sales',
+    popular: false,
   },
 ];
 
 const Plans = () => {
-  const [isYearly, setIsYearly] = useState(true);
-  const { isAuthenticated, subscription } = useAuth();
-  const navigate = useNavigate();
-
-  const handleSelectPlan = (planId) => {
-    if (!isAuthenticated) {
-      navigate('/register', { state: { selectedPlan: planId } });
-      return;
-    }
-
-    if (planId === 'free') {
-      // Handle downgrade or stay on free
-      return;
-    }
-
-    navigate(`/subscription/checkout/${planId}?billing=${isYearly ? 'yearly' : 'monthly'}`);
-  };
-
-  const getButtonText = (plan) => {
-    if (!isAuthenticated) return 'Get Started';
-    if (subscription?.plan === plan.id) return 'Current Plan';
-    if (plan.id === 'free') return 'Downgrade';
-    return 'Upgrade';
-  };
-
-  const isCurrentPlan = (planId) => subscription?.plan === planId;
+  const [billingPeriod, setBillingPeriod] = useState('monthly');
 
   return (
-    <div className={styles.plans}>
-      {/* Header */}
-      <motion.div
-        className={styles.header}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <h1>Choose Your Plan</h1>
-        <p>
-          Select the perfect plan for your needs. Upgrade or downgrade anytime.
-        </p>
+    <div className="plans-page">
+      <div className="plans-header">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1>Choose Your Plan</h1>
+          <p>Select the perfect plan for your needs</p>
+        </motion.div>
 
         {/* Billing Toggle */}
-        <div className={styles.billingToggle}>
-          <span className={!isYearly ? styles.active : ''}>Monthly</span>
-          <Switch
-            checked={isYearly}
-            onChange={() => setIsYearly(!isYearly)}
-          />
-          <span className={isYearly ? styles.active : ''}>
-            Yearly
-            <span className={styles.saveBadge}>Save 20%</span>
+        <motion.div
+          className="billing-toggle"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <span className={billingPeriod === 'monthly' ? 'active' : ''}>Monthly</span>
+          <button
+            className="toggle-switch"
+            onClick={() => setBillingPeriod(billingPeriod === 'monthly' ? 'yearly' : 'monthly')}
+          >
+            <span className="toggle-ball" />
+          </button>
+          <span className={billingPeriod === 'yearly' ? 'active' : ''}>
+            Yearly <span className="save-badge">Save 20%</span>
           </span>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
       {/* Plans Grid */}
-      <div className={styles.plansGrid}>
+      <div className="plans-grid">
         {plans.map((plan, index) => (
           <motion.div
             key={plan.id}
-            className={`${styles.planCard} ${plan.popular ? styles.popular : ''} ${
-              isCurrentPlan(plan.id) ? styles.current : ''
-            }`}
+            className={`plan-card ${plan.popular ? 'popular' : ''}`}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            style={{ '--plan-color': plan.color }}
           >
             {plan.popular && (
-              <div className={styles.popularBadge}>Most Popular</div>
+              <div className="popular-badge">
+                <FiStar />
+                <span>Most Popular</span>
+              </div>
             )}
 
-            {isCurrentPlan(plan.id) && (
-              <div className={styles.currentBadge}>Current Plan</div>
-            )}
-
-            <div className={styles.planHeader}>
-              <div className={styles.planIcon}>
+            <div className="plan-header">
+              <div className="plan-icon" style={{ background: `rgba(${hexToRgb(plan.color)}, 0.2)`, color: plan.color }}>
                 <plan.icon />
               </div>
               <h2>{plan.name}</h2>
-              <p>{plan.description}</p>
+              <p className="plan-description">{plan.description}</p>
             </div>
 
-            <div className={styles.pricing}>
-              <span className={styles.currency}>$</span>
-              <span className={styles.amount}>
-                {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
-              </span>
-              {plan.monthlyPrice > 0 && (
-                <span className={styles.period}>
-                  /{isYearly ? 'year' : 'month'}
-                </span>
-              )}
+            <div className="plan-pricing">
+              <span className="currency">$</span>
+              <span className="price">{billingPeriod === 'yearly' ? (plan.price * 0.8).toFixed(2) : plan.price}</span>
+              <span className="period">/{plan.period}</span>
             </div>
 
-            {isYearly && plan.monthlyPrice > 0 && (
-              <p className={styles.monthlyCost}>
-                That's ${(plan.yearlyPrice / 12).toFixed(2)}/month
-              </p>
+            {billingPeriod === 'yearly' && plan.price > 0 && (
+              <div className="yearly-savings">
+                Save ${(plan.price * 12 * 0.2).toFixed(2)}/year
+              </div>
             )}
 
-            <Button
-              variant={plan.popular ? 'primary' : 'secondary'}
-              size="large"
-              fullWidth
-              disabled={isCurrentPlan(plan.id)}
-              onClick={() => handleSelectPlan(plan.id)}
-              icon={!isCurrentPlan(plan.id) && <FiArrowRight />}
-            >
-              {getButtonText(plan)}
-            </Button>
-
-            <div className={styles.features}>
-              {plan.features.map((feature) => (
-                <div
-                  key={feature.name}
-                  className={`${styles.feature} ${
-                    !feature.included ? styles.notIncluded : ''
-                  }`}
-                >
-                  {feature.included ? (
-                    <FiCheck className={styles.checkIcon} />
-                  ) : (
-                    <FiX className={styles.xIcon} />
-                  )}
-                  <span>{feature.name}</span>
-                </div>
+            <ul className="plan-features">
+              {plan.features.map((feature, idx) => (
+                <li key={idx} className={feature.included ? 'included' : 'not-included'}>
+                  {feature.included ? <FiCheck /> : <FiX />}
+                  <span>{feature.text}</span>
+                </li>
               ))}
-            </div>
+            </ul>
+
+            <Link to={plan.price === 0 ? '/register' : `/subscription/checkout/${plan.id}`}>
+              <Button
+                variant={plan.popular ? 'primary' : 'outline'}
+                size="large"
+                icon={<FiArrowRight />}
+                className="plan-cta"
+              >
+                {plan.cta}
+              </Button>
+            </Link>
           </motion.div>
         ))}
       </div>
 
       {/* FAQ Section */}
       <motion.section
-        className={styles.faq}
-        initial={{ opacity: 0, y: 30 }}
+        className="plans-faq"
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
         <h2>Frequently Asked Questions</h2>
-        <div className={styles.faqGrid}>
-          <div className={styles.faqItem}>
-            <h3>Can I switch plans anytime?</h3>
-            <p>
-              Yes! You can upgrade or downgrade your plan at any time. 
-              Changes take effect immediately, and we'll prorate any charges.
-            </p>
-          </div>
-          <div className={styles.faqItem}>
-            <h3>Is there a free trial?</h3>
-            <p>
-              Yes, Pro and Enterprise plans come with a 7-day free trial. 
-              No credit card required to start.
-            </p>
-          </div>
-          <div className={styles.faqItem}>
-            <h3>What payment methods do you accept?</h3>
-            <p>
-              We accept all major credit cards, PayPal, and cryptocurrency. 
-              Enterprise customers can also pay via invoice.
-            </p>
-          </div>
-          <div className={styles.faqItem}>
+        <div className="faq-grid">
+          <div className="faq-item">
             <h3>Can I cancel anytime?</h3>
-            <p>
-              Absolutely! Cancel anytime with no questions asked. 
-              You'll continue to have access until the end of your billing period.
-            </p>
+            <p>Yes, you can cancel your subscription at any time. Your account will remain active until the end of your billing period.</p>
+          </div>
+          <div className="faq-item">
+            <h3>Is there a free trial?</h3>
+            <p>Yes! All paid plans come with a 14-day free trial. No credit card required to start.</p>
+          </div>
+          <div className="faq-item">
+            <h3>Can I upgrade or downgrade?</h3>
+            <p>Absolutely! You can change your plan at any time from your account settings.</p>
+          </div>
+          <div className="faq-item">
+            <h3>What payment methods do you accept?</h3>
+            <p>We accept all major credit cards, PayPal, and cryptocurrency payments.</p>
           </div>
         </div>
-      </motion.section>
-
-      {/* Enterprise CTA */}
-      <motion.section
-        className={styles.enterpriseCta}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <div className={styles.ctaContent}>
-          <h2>Need a Custom Solution?</h2>
-          <p>
-            Contact our sales team for custom enterprise solutions, 
-            volume discounts, and dedicated support.
-          </p>
-        </div>
-        <Link to="/contact">
-          <Button variant="outline" size="large">
-            Contact Sales
-          </Button>
-        </Link>
       </motion.section>
     </div>
   );
 };
+
+// Helper function
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+    : '100, 100, 100';
+}
 
 export default Plans;

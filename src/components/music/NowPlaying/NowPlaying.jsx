@@ -20,8 +20,8 @@ import {
   FiChevronDown,
   FiChevronUp,
 } from 'react-icons/fi';
-import { useMusic } from ' @hooks/useMusic';
-import Visualizer from ' @components/music/Visualizer';
+import { useMusic } from '@hooks/useMusic';
+import Visualizer from '@components/music/Visualizer';
 import styles from './NowPlaying.module.scss';
 
 const NowPlaying = () => {

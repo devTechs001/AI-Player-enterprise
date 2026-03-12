@@ -34,11 +34,10 @@ const Library = () => {
     queue,
     playTrack,
     pauseTrack,
-    addToQueue,
     shuffleQueue,
   } = useMusic();
 
-  const { data: library, isLoading } = useQuery(
+  const { data: library } = useQuery(
     ['musicLibrary', searchQuery, activeFilter],
     () => musicService.getLibrary({ search: searchQuery, filter: activeFilter })
   );
@@ -250,7 +249,7 @@ const Library = () => {
             <div className={styles.queue}>
               <h3>Up Next</h3>
               <div className={styles.queueList}>
-                {queue.slice(0, 5).map((track, index) => (
+                {queue.slice(0, 5).map((track) => (
                   <div key={track.id} className={styles.queueItem}>
                     <img src={track.cover} alt={track.title} />
                     <div className={styles.queueInfo}>

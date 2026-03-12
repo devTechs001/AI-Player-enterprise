@@ -110,7 +110,7 @@ const CollaborationProvider = ({ children }) => {
 
   // Initialize socket connection
   const initializeSocket = useCallback((userId, roomId) => {
-    const socket = io(process.env.REACT_APP_WEBSOCKET_URL, {
+    const socket = io(import.meta.env.VITE_REACT_APP_WEBSOCKET_URL || 'ws://localhost:3001', {
       auth: {
         userId,
         roomId,

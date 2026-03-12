@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -30,7 +29,7 @@ import styles from './Overview.module.scss';
 const Overview = () => {
   const { user, subscription } = useAuth();
 
-  const { data: stats, isLoading: statsLoading } = useQuery(
+  const { data: stats } = useQuery(
     'dashboardStats',
     videoService.getDashboardStats
   );
@@ -136,7 +135,7 @@ const Overview = () => {
           >
             <h2 className={styles.sectionTitle}>Quick Actions</h2>
             <div className={styles.quickActions}>
-              {quickActions.map((action, index) => (
+              {quickActions.map((action) => (
                 <Link
                   key={action.path}
                   to={action.path}

@@ -1,83 +1,65 @@
-import { Suspense, useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+// src/App.jsx
+import { Suspense, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 
-import routes from './routes';
-import Splash from './pages/Splash';
-import MainLayout from './components/layout/MainLayout';
-import DashboardLayout from './components/layout/DashboardLayout';
-import AdminLayout from './components/layout/AdminLayout';
-import AuthLayout from './components/layout/AuthLayout';
-import PlayerLayout from './components/layout/PlayerLayout';
-import PageLoader from './components/common/Loader/PageLoader';
-import MiniPlayer from './components/player/MiniPlayer';
-import { useAuth } from './hooks/useAuth';
-import { usePlayer } from './hooks/usePlayer';
+import { useTheme } from '@hooks/useTheme'
+import { useAuth } from '@hooks/useAuth'
+import { routes } from './routes'
+import Loader from '@components/common/Loader'
+import Splash from '@pages/Splash'
 
 const App = () => {
-  const [showSplash, setShowSplash] = useState(true);
-  const location = useLocation();
-  const { isLoading: authLoading, initAuth } = useAuth();
-  const { currentTrack, isMinimized } = usePlayer();
+  const location = useLocation()
+  const { theme, initTheme } = useTheme()
+  const { initAuth, isLoading } = useAuth()
 
   useEffect(() => {
-    initAuth();
-    const timer = setTimeout(() => setShowSplash(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
+    initTheme()
+    initAuth()
+  }, [])
 
-  if (showSplash) {
-    return <Splash />;
+  useEffect(() => {
+    // Update document class for theme
+    document.documentElement.className = theme
+  }, [theme])
+
+  if (isLoading) {
+    return <Splash />
   }
-
-  if (authLoading) {
-    return <PageLoader />;
-  }
-
-  const getLayout = (route) => {
-    switch (route.layout) {
-      case 'dashboard':
-        return DashboardLayout;
-      case 'admin':
-        return AdminLayout;
-      case 'auth':
-        return AuthLayout;
-      case 'player':
-        return PlayerLayout;
-      case 'none':
-        return ({ children }) => children;
-      default:
-        return MainLayout;
-    }
-  };
 
   return (
-    <>
+    <div className={`app ${theme} min-h-screen bg-dark-950 text-white`}>
       <AnimatePresence mode="wait">
-        <Suspense fallback={<PageLoader />}>
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center min-h-screen">
+              <Loader size="lg" />
+            </div>
+          }
+        >
           <Routes location={location} key={location.pathname}>
-            {routes.map((route) => {
-              const Layout = getLayout(route);
-              return (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={
-                    <Layout>
-                      <route.component />
-                    </Layout>
-                  }
-                />
-              );
-            })}
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={route.element}
+              >
+                {route.children?.map((child, childIndex) => (
+                  <Route
+                    key={childIndex}
+                    path={child.path}
+                    element={child.element}
+                    index={child.index}
+                  />
+                ))}
+              </Route>
+            ))}
           </Routes>
         </Suspense>
       </AnimatePresence>
-      
-      {/* Mini Player */}
-      {currentTrack && isMinimized && <MiniPlayer />}
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default App;
+export default App

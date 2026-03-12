@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from ' @reduxjs/toolkit';
-import { videoService } from ' @services/video.service';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { videoService } from '@services/video.service';
 
 const initialState = {
   currentMedia: null,
