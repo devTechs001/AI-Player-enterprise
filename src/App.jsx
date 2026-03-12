@@ -11,11 +11,10 @@ import Splash from '@pages/Splash'
 
 const App = () => {
   const location = useLocation()
-  const { theme, initTheme } = useTheme()
+  const { theme } = useTheme()
   const { initAuth, isLoading } = useAuth()
 
   useEffect(() => {
-    initTheme()
     initAuth()
   }, [])
 
