@@ -31,7 +31,7 @@ const Community = () => {
             <div className="stat">
               <FiUsers />
               <span>50K+</span>
-              <p>Members</span>
+              <p>Members</p>
             </div>
             <div className="stat">
               <FiMessageSquare />
