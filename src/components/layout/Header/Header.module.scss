@@ -4,35 +4,39 @@
   left: 0;
   right: 0;
   z-index: var(--z-sticky);
-  padding: var(--space-4) 0;
-  transition: all var(--transition-normal);
+  padding: 1.25rem 0;
+  transition: all 0.3s ease;
   background: transparent;
 
   &.scrolled {
-    background: rgba(var(--bg-primary-rgb), 0.8);
-    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-primary);
-    padding: var(--space-3) 0;
+    padding: 0.75rem 0;
   }
 }
 
 .container {
-  max-width: 1440px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 2rem;
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .logo {
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
+// Desktop Navigation
 .desktopNav {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 0.5rem;
 
   @media (max-width: 1024px) {
     display: none;
@@ -42,16 +46,17 @@
 .navLink {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
   color: var(--text-secondary);
   font-weight: 500;
-  font-size: var(--text-sm);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  text-decoration: none;
 
   svg {
-    font-size: 16px;
+    font-size: 1.1rem;
   }
 
   &:hover {
@@ -65,9 +70,11 @@
   }
 }
 
+// Search
 .searchForm {
   flex: 1;
-  max-width: 400px;
+  max-width: 420px;
+  margin: 0 2rem;
 
   @media (max-width: 768px) {
     display: none;
@@ -82,21 +89,21 @@
 
 .searchIcon {
   position: absolute;
-  left: var(--space-4);
+  left: 1rem;
   color: var(--text-tertiary);
-  font-size: 18px;
+  font-size: 1.1rem;
+  pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: var(--space-3) var(--space-4);
-  padding-left: var(--space-10);
+  padding: 0.65rem 1rem 0.65rem 2.75rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   color: var(--text-primary);
-  font-size: var(--text-sm);
-  transition: all var(--transition-fast);
+  font-size: 0.9rem;
+  transition: all 0.2s;
 
   &::placeholder {
     color: var(--text-tertiary);
@@ -105,17 +112,21 @@
   &:focus {
     outline: none;
     border-color: var(--primary-500);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    background: var(--bg-tertiary);
   }
 }
 
 .clearSearch {
   position: absolute;
-  right: var(--space-3);
-  padding: var(--space-1);
+  right: 0.75rem;
+  padding: 0.25rem;
   color: var(--text-tertiary);
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
 
   &:hover {
     color: var(--text-primary);
@@ -123,24 +134,29 @@
   }
 }
 
+// Right Section
 .rightSection {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .iconBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
+  width: 42px;
+  height: 42px;
+  border-radius: 0.5rem;
   color: var(--text-secondary);
-  transition: all var(--transition-fast);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
 
   svg {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   &:hover {
@@ -149,27 +165,30 @@
   }
 }
 
+// Notifications
 .notificationWrapper {
   position: relative;
 }
 
 .badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 6px;
+  right: 6px;
   min-width: 18px;
   height: 18px;
-  padding: 0 var(--space-1);
+  padding: 0 0.35rem;
   background: var(--accent-red);
-  border-radius: var(--radius-full);
+  border-radius: 9999px;
   color: white;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid var(--bg-primary);
 }
 
+// User Menu
 .userMenu {
   position: relative;
 }
@@ -177,22 +196,28 @@
 .userBtn {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1);
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
-  border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s;
 
   &:hover {
     border-color: var(--border-secondary);
+    background: var(--bg-hover);
   }
 }
 
 .userName {
   color: var(--text-primary);
   font-weight: 500;
-  font-size: var(--text-sm);
+  font-size: 0.9rem;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
     display: none;
@@ -201,8 +226,8 @@
 
 .chevron {
   color: var(--text-tertiary);
-  font-size: 14px;
-  transition: transform var(--transition-fast);
+  font-size: 0.875rem;
+  transition: transform 0.2s;
 
   &.open {
     transform: rotate(180deg);
@@ -211,31 +236,34 @@
 
 .dropdown {
   position: absolute;
-  top: calc(100% + var(--space-2));
+  top: calc(100% + 0.5rem);
   right: 0;
-  width: 280px;
+  width: 300px;
   background: var(--bg-card);
   border: 1px solid var(--border-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   overflow: hidden;
+  z-index: 1000;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4);
+  gap: 0.75rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-primary);
 
   .name {
     color: var(--text-primary);
     font-weight: 600;
+    font-size: 0.95rem;
   }
 
   .email {
     color: var(--text-tertiary);
-    font-size: var(--text-xs);
-    margin-bottom: var(--space-1);
+    font-size: 0.8rem;
+    margin-top: 0.125rem;
   }
 }
 
@@ -245,22 +273,27 @@
 }
 
 .menuItems {
-  padding: var(--space-2);
+  padding: 0.5rem;
 }
 
 .menuItem {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 0.75rem;
   width: 100%;
-  padding: var(--space-3);
+  padding: 0.75rem;
   color: var(--text-secondary);
-  font-size: var(--text-sm);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
+  font-size: 0.9rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
 
   svg {
-    font-size: 18px;
+    font-size: 1.1rem;
+    flex-shrink: 0;
   }
 
   &:hover {
@@ -274,14 +307,15 @@
 
   &.logout {
     color: var(--accent-red);
-    margin: var(--space-2);
+    margin: 0.25rem;
   }
 }
 
+// Auth Buttons
 .authButtons {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.5rem;
 
   @media (max-width: 768px) {
     display: none;
@@ -289,19 +323,23 @@
 }
 
 .guestBadge {
-  margin-right: var(--space-2);
+  margin-right: 0.5rem;
 }
 
+// Mobile Menu Button
 .mobileMenuBtn {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   color: var(--text-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
 
   svg {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   @media (max-width: 1024px) {
@@ -309,6 +347,7 @@
   }
 }
 
+// Mobile Menu
 .mobileMenu {
   position: absolute;
   top: 100%;
@@ -316,8 +355,8 @@
   right: 0;
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-primary);
-  padding: var(--space-4);
-  overflow: hidden;
+  padding: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
   @media (min-width: 1025px) {
     display: none;
@@ -327,14 +366,15 @@
 .mobileSearch {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
   background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--space-4);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
 
   svg {
     color: var(--text-tertiary);
+    flex-shrink: 0;
   }
 
   input {
@@ -342,7 +382,7 @@
     background: none;
     border: none;
     color: var(--text-primary);
-    font-size: var(--text-base);
+    font-size: 1rem;
 
     &::placeholder {
       color: var(--text-tertiary);
@@ -357,20 +397,23 @@
 .mobileNav {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 0.25rem;
 }
 
 .mobileNavLink {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
   color: var(--text-secondary);
   font-weight: 500;
-  border-radius: var(--radius-md);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s;
 
   svg {
-    font-size: 20px;
+    font-size: 1.25rem;
+    flex-shrink: 0;
   }
 
   &.active {
@@ -382,8 +425,8 @@
 .mobileAuth {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border-primary);
 }
