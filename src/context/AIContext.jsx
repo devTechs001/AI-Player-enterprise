@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import { aiService } from '../services/ai.service';
 
-const AIContext = createContext();
+export const AIContext = createContext();
 
 const aiReducer = (state, action) => {
   switch (action.type) {

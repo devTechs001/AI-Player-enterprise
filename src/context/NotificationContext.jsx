@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import toast from 'react-hot-toast';
 
-const NotificationContext = createContext();
+export const NotificationContext = createContext();
 
 const notificationReducer = (state, action) => {
   switch (action.type) {

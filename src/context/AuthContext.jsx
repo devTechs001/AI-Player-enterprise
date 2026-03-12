@@ -2,7 +2,7 @@ import { createContext, useReducer, useCallback } from 'react';
 import { authService } from '@services/auth.service';
 import { storageService } from '@services/storage.service';
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 const initialState = {
   user: null,

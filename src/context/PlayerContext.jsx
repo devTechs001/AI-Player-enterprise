@@ -1,7 +1,7 @@
 import { createContext, useReducer, useCallback, useRef } from 'react';
 import { mediaService } from '@services/media.service';
 
-const PlayerContext = createContext(null);
+export const PlayerContext = createContext(null);
 
 const initialState = {
   // Current Media

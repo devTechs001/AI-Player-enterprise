@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useReducer, useCallback } from 'react';
 import io from 'socket.io-client';
 
-const CollaborationContext = createContext();
+export const CollaborationContext = createContext();
 
 const collaborationReducer = (state, action) => {
   switch (action.type) {

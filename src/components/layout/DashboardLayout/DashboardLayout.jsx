@@ -3,7 +3,7 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FiHome, FiVideo, FiDownload, FiMusic, FiClock, FiHeart,
-  FiList, FiLibrary, FiBarChart2, FiUser, FiSettings, FiLogOut,
+  FiList, FiFolder, FiBarChart2, FiUser, FiSettings, FiLogOut,
   FiMenu, FiX, FiBell, FiSearch, FiShield, FiCreditCard
 } from 'react-icons/fi';
 import { useAuth } from '@hooks/useAuth';
@@ -19,7 +19,7 @@ const navigation = [
   { name: 'History', href: '/dashboard/history', icon: FiClock },
   { name: 'Favorites', href: '/dashboard/favorites', icon: FiHeart },
   { name: 'Playlists', href: '/dashboard/playlists', icon: FiList },
-  { name: 'Library', href: '/dashboard/library', icon: FiLibrary },
+  { name: 'Library', href: '/dashboard/library', icon: FiFolder },
   { name: 'Analytics', href: '/dashboard/analytics', icon: FiBarChart2 },
 ];
 

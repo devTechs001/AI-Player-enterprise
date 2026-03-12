@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   FiCheck, FiX, FiZap, FiShield, FiGlobe, FiHeart,
-  FiStar, FiCrown, FiArrowRight
+  FiStar, FiAward, FiArrowRight
 } from 'react-icons/fi';
 import Button from '@components/common/Button';
 import './Plans.scss';
@@ -78,7 +78,7 @@ const plans = [
     price: 49.99,
     period: 'month',
     description: 'For teams and businesses',
-    icon: FiCrown,
+    icon: FiAward,
     color: '#f59e0b',
     features: [
       { text: 'Everything in Pro', included: true },

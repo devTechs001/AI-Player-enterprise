@@ -2,7 +2,7 @@ import { createContext, useReducer, useCallback, useRef } from 'react';
 import { downloadService } from '@services/download.service';
 import { v4 as uuidv4 } from 'uuid';
 
-const DownloadContext = createContext(null);
+export const DownloadContext = createContext(null);
 
 const initialState = {
   downloads: [],

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiCode, FiKey, FiShield, FiWebhook, FiBook, FiDownload, FiCopy, FiCheck } from 'react-icons/fi';
+import { FiCode, FiKey, FiShield, FiLink, FiBook, FiDownload, FiCopy, FiCheck } from 'react-icons/fi';
 import Button from '@components/common/Button';
 import './API.scss';
 
@@ -118,7 +118,7 @@ const API = () => {
           <span className="stat-label">Uptime</span>
         </div>
         <div className="stat-card">
-          <FiWebhook className="stat-icon" />
+          <FiLink className="stat-icon" />
           <span className="stat-value">Webhooks</span>
           <span className="stat-label">Real-time Events</span>
         </div>

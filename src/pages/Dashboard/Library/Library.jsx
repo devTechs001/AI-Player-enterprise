@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiLibrary } from 'react-icons/fi';
+import { FiFolder } from 'react-icons/fi';
 import '../Dashboard.scss';
 
 const Library = () => {
@@ -15,7 +15,7 @@ const Library = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="empty-icon">
-          <FiLibrary />
+          <FiFolder />
         </div>
         <h2>Library is empty</h2>
         <p>Add content to your library</p>

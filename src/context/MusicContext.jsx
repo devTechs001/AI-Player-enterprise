@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-const MusicContext = createContext();
+export const MusicContext = createContext();
 
 const musicReducer = (state, action) => {
   switch (action.type) {
