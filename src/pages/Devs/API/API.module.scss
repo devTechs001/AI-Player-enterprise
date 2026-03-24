@@ -1,0 +1,170 @@
+
+.apiPage {
+  padding: var(--space-8);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  min-height: calc(100vh - var(--header-height));
+
+  .header {
+    margin-bottom: var(--space-10);
+
+    h1 {
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+    }
+  }
+
+  .apiGrid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-8);
+  }
+
+  .sidebar {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    height: fit-content;
+    position: sticky;
+    top: var(--space-8);
+
+    h3 {
+      font-size: var(--text-base);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+
+    .navList {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .navItem {
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-md);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+
+        &:hover {
+          background: var(--bg-tertiary);
+          color: var(--text-primary);
+        }
+
+        &.active {
+          background: var(--color-primary-subtle);
+          color: var(--color-primary);
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .content {
+    .endpointCard {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-8);
+
+      .endpointHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-6);
+
+        .method {
+          padding: var(--space-1) var(--space-3);
+          border-radius: var(--radius-sm);
+          font-size: var(--text-xs);
+          font-weight: 700;
+          text-transform: uppercase;
+
+          &.get { background: var(--color-success-subtle); color: var(--color-success); }
+          &.post { background: var(--color-primary-subtle); color: var(--color-primary); }
+          &.put { background: var(--color-warning-subtle); color: var(--color-warning); }
+          &.delete { background: var(--color-error-subtle); color: var(--color-error); }
+        }
+
+        .path {
+          font-family: var(--font-family-mono);
+          font-size: var(--text-lg);
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+      }
+
+      .description {
+        color: var(--text-secondary);
+        margin-bottom: var(--space-6);
+      }
+
+      .codeBlock {
+        background: #0d0d17;
+        padding: var(--space-4);
+        border-radius: var(--radius-md);
+        font-family: var(--font-family-mono);
+        font-size: var(--text-sm);
+        color: #e0e0e0;
+        overflow-x: auto;
+        margin-bottom: var(--space-6);
+      }
+
+      .paramsTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: var(--space-6);
+
+        th, td {
+          padding: var(--space-3);
+          text-align: left;
+          border-bottom: 1px solid var(--border-primary);
+        }
+
+        th {
+          font-size: var(--text-xs);
+          font-weight: 600;
+          color: var(--text-tertiary);
+          text-transform: uppercase;
+        }
+
+        td {
+          font-size: var(--text-sm);
+        }
+
+        .paramName {
+          font-family: var(--font-family-mono);
+          font-weight: 600;
+          color: var(--color-primary);
+        }
+
+        .paramType {
+          font-family: var(--font-family-mono);
+          color: var(--text-tertiary);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .apiGrid {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+  }
+}

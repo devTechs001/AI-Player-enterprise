@@ -16,11 +16,13 @@ const App = () => {
 
   useEffect(() => {
     initAuth()
-  }, [])
+  }, [initAuth])
 
   useEffect(() => {
     // Update document class for theme
-    document.documentElement.className = theme
+    if (theme) {
+      document.documentElement.className = theme
+    }
   }, [theme])
 
   if (isLoading) {

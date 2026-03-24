@@ -1,9 +1,6 @@
 // Main Styles Entry Point
 
-// Variables
-@import './variables';
-
-// Global Styles
+// Base styles
 * {
   box-sizing: border-box;
   margin: 0;
@@ -105,4 +102,26 @@ select {
   @media (min-width: 768px) {
     padding: 0 2rem;
   }
+}
+
+// Global SCSS Variables Mixin for modules
+@mixin theme-variables {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #13131a;
+  --bg-tertiary: #1a1a24;
+  --bg-card: #16161f;
+  --bg-hover: #1f1f2e;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --border-primary: #27272a;
+  --primary-500: #3b82f6;
+  --secondary-500: #8b5cf6;
+  --accent-green: #10b981;
+  --gradient-primary: linear-gradient(135deg, var(--primary-500) 0%, var(--secondary-500) 100%);
+}
+
+// Apply theme variables globally
+:root {
+  @include theme-variables;
 }

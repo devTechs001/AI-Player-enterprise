@@ -13,7 +13,7 @@ import {
   FiList,
   FiShuffle,
 } from 'react-icons/fi';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { musicService } from '@services/music.service';
 import { useMusic } from '@hooks/useMusic';
 import MusicCard from '@components/music/MusicCard';

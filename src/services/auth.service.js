@@ -76,11 +76,50 @@ class AuthService {
   async socialLogin(provider, token) {
     const response = await api.post(`/auth/social/${provider}`, { token });
     const { accessToken, refreshToken, user } = response.data;
-    
+
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
-    
+
     return { success: true, user };
+  }
+
+  // Social login with OAuth code (server-side exchange)
+  async socialLoginWithCode(provider, code) {
+    const response = await api.post(`/auth/social/${provider}/callback`, { 
+      code,
+      redirect_uri: window.location.origin + '/auth/callback'
+    });
+    const { accessToken, refreshToken, user } = response.data;
+
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+
+    return { success: true, user };
+  }
+
+  // Demo social login (for development without backend)
+  async demoSocialLogin(provider) {
+    // Simulate API response
+    const mockUser = {
+      id: `social-${provider}-${Date.now()}`,
+      email: `user@${provider}.com`,
+      name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
+      provider,
+      avatar: null,
+      role: 'user',
+    };
+
+    // Create mock tokens (base64 encoded payload)
+    const mockToken = btoa(JSON.stringify({
+      sub: mockUser.id,
+      email: mockUser.email,
+      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60), // 24 hours
+    }));
+
+    localStorage.setItem('accessToken', mockToken);
+    localStorage.setItem('refreshToken', mockToken);
+
+    return { success: true, user: mockUser };
   }
 
   // Refresh token

@@ -15,10 +15,10 @@ import {
   FiSkipBack,
   FiSkipForward,
   FiCast,
-  FiPictureInPicture,
+  FiMonitor,
   FiZap,
   FiList,
-  FiSubtitle,
+  FiType,
 } from 'react-icons/fi';
 import { usePlayer } from '@hooks/usePlayer';
 import { useFullscreen } from '@hooks/useFullscreen';
@@ -307,7 +307,7 @@ const VideoPlayer = ({
                       onClick={() => setSettingsTab('subtitles')}
                       className={`${styles.controlBtn} ${activeSubtitle ? styles.active : ''}`}
                     >
-                      <FiSubtitle />
+                      <FiType />
                     </button>
                   </Tooltip>
                 )}
@@ -324,7 +324,7 @@ const VideoPlayer = ({
                 {isPiPSupported && (
                   <Tooltip content="Picture in Picture (P)">
                     <button onClick={togglePiP} className={styles.controlBtn}>
-                      <FiPictureInPicture />
+                      <FiMonitor />
                     </button>
                   </Tooltip>
                 )}

@@ -1,0 +1,292 @@
+// Alert Component Styles
+// Following the design system from index.css
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-family-primary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+
+  // Glass morphism effect
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-surface);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.8;
+  }
+
+  // Size variants
+  &.alert-sm {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    
+    .alert-icon {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+  }
+
+  &.alert-md {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    
+    .alert-icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &.alert-lg {
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-base);
+    
+    .alert-icon {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+  }
+
+  // Content layout
+  .alert-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    flex: 1;
+  }
+
+  .alert-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .alert-icon {
+    width: 2rem;
+    height: 2rem;
+    stroke-width: 2;
+  }
+
+  .alert-message {
+    flex: 1;
+    color: var(--text-primary);
+  }
+
+  // Dismiss button
+  .alert-dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-1);
+    margin: calc(-1 * var(--space-1)) calc(-1 * var(--space-1));
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: currentColor;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+      background: var(--bg-surface-hover);
+    }
+
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  .alert-dismiss-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    stroke-width: 2;
+  }
+
+  // Variant styles
+  &.alert-info {
+    color: var(--color-info);
+    border-color: var(--color-info);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+    box-shadow: var(--shadow-glow-primary);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.08));
+    }
+  }
+
+  &.alert-success {
+    color: var(--color-success);
+    border-color: var(--color-success);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.08));
+    }
+  }
+
+  &.alert-warning {
+    color: var(--color-warning);
+    border-color: var(--color-warning);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.08));
+    }
+  }
+
+  &.alert-error {
+    color: var(--color-error);
+    border-color: var(--color-error);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.08));
+    }
+  }
+
+  // Light theme adjustments
+  :global([data-theme="light"]) {
+    .alert {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: var(--text-primary);
+    }
+
+    .alert.info {
+      background: rgba(219, 234, 254, 0.95);
+      border-color: var(--color-info-light);
+      color: var(--color-info-dark);
+    }
+
+    .alert.success {
+      background: rgba(220, 252, 231, 0.95);
+      border-color: var(--color-success-light);
+      color: var(--color-success-dark);
+    }
+
+    .alert.warning {
+      background: rgba(254, 243, 199, 0.95);
+      border-color: var(--color-warning-light);
+      color: var(--color-warning-dark);
+    }
+
+    .alert.error {
+      background: rgba(254, 226, 226, 0.95);
+      border-color: var(--color-error-light);
+      color: var(--color-error-dark);
+    }
+  }
+
+  // Neon theme adjustments
+  :global([data-theme="neon"]) {
+    .alert {
+      background: rgba(10, 10, 10, 0.95);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    }
+
+    .alert.info {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+    }
+
+    .alert.success {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 20px rgba(0, 255, 135, 0.3);
+    }
+
+    .alert.warning {
+      border-color: var(--neon-yellow);
+      box-shadow: 0 0 20px rgba(255, 234, 0, 0.3);
+      background: linear-gradient(135deg, rgba(255, 234, 0, 0.1), rgba(255, 234, 0, 0.05));
+      box-shadow: 0 0 30px rgba(255, 234, 0, 0.3);
+    }
+
+    .alert.error {
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 20px rgba(255, 0, 245, 0.3);
+    }
+  }
+
+  // Animations
+  @keyframes alertSlideIn {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes alertSlideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  }
+
+  // Animation classes
+  &.alert-enter {
+    animation: alertSlideIn var(--transition-slow) ease-out;
+  }
+
+  &.alert-exit {
+    animation: alertSlideOut var(--transition-slow) ease-in;
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    padding: var(--space-3);
+    font-size: var(--text-xs);
+
+    &.alert-lg {
+      padding: var(--space-3);
+      font-size: var(--text-sm);
+    }
+
+    .alert-content {
+      gap: var(--space-2);
+    }
+
+    .alert-icon {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+
+    .alert-dismiss {
+      margin: calc(-1 * var(--space-2)) calc(-1 * var(--space-2));
+    }
+
+    .alert-dismiss-icon {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+}

@@ -1,100 +1,104 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { FiCheck, FiAlertTriangle, FiX } from 'react-icons/fi';
-import './Status.scss';
-
-const services = [
-  { name: 'Video Streaming', status: 'operational', uptime: '99.99%' },
-  { name: 'Download Service', status: 'operational', uptime: '99.95%' },
-  { name: 'AI Processing', status: 'operational', uptime: '99.90%' },
-  { name: 'Authentication', status: 'operational', uptime: '100%' },
-  { name: 'API Services', status: 'degraded', uptime: '98.50%' },
-  { name: 'Storage', status: 'operational', uptime: '99.99%' },
-];
+import { 
+  FiActivity, 
+  FiServer, 
+  FiShield, 
+  FiGlobe, 
+  FiClock, 
+  FiAlertCircle,
+  FiZap
+} from 'react-icons/fi';
+import styles from './Status.module.scss';
 
 const Status = () => {
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'operational':
-        return <FiCheck />;
-      case 'degraded':
-        return <FiAlertTriangle />;
-      case 'outage':
-        return <FiX />;
-      default:
-        return <FiCheck />;
-    }
-  };
+  const systems = [
+    { name: 'API Services', status: 'operational', uptime: '99.99%', icon: <FiActivity />, value: '124ms' },
+    { name: 'Video Processing', status: 'operational', uptime: '99.95%', icon: <FiZap />, value: '0.8s' },
+    { name: 'Content Delivery (CDN)', status: 'operational', uptime: '100%', icon: <FiGlobe />, value: 'Global' },
+    { name: 'Database Clusters', status: 'operational', uptime: '99.99%', icon: <FiServer />, value: 'Active' },
+    { name: 'Security Gateway', status: 'operational', uptime: '100%', icon: <FiShield />, value: 'Secure' },
+    { name: 'Authentication', status: 'operational', uptime: '99.98%', icon: <FiClock />, value: 'Verified' },
+  ];
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'operational':
-        return '#10b981';
-      case 'degraded':
-        return '#f59e0b';
-      case 'outage':
-        return '#ef4444';
-      default:
-        return '#10b981';
-    }
-  };
+  const incidents = [
+    { date: 'Oct 24, 2023', title: 'Scheduled Maintenance', content: 'Database optimization and security patches applied successfully.' },
+    { date: 'Oct 12, 2023', title: 'API Latency', content: 'Resolved an issue causing increased response times in European regions.' },
+    { date: 'Sep 28, 2023', title: 'New CDN Node Deployment', content: 'Added 5 new edge locations to improve delivery speeds in Asia-Pacific.' }
+  ];
 
   return (
-    <div className="status-page">
-      <div className="status-header">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+    <div className={styles.statusPage}>
+      <header className={styles.header}>
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1>System Status</h1>
-          <p>Real-time status of all AI Video Player services</p>
+          System Status
+        </motion.h1>
+        <motion.div 
+          className={styles.overallStatus}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          <span className={styles.dot} />
+          All Systems Operational
         </motion.div>
-        <div className="overall-status">
-          <span className="status-indicator" style={{ background: '#10b981' }} />
-          <span>All Systems Operational</span>
-        </div>
-      </div>
+      </header>
 
-      <div className="services-list">
-        {services.map((service, index) => (
+      <div className={styles.metricsGrid}>
+        {systems.map((system, index) => (
           <motion.div
-            key={service.name}
-            className="service-card"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            key={system.name}
+            className={styles.metricCard}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <div className="service-info">
-              <span className="service-name">{service.name}</span>
-              <span className="service-uptime">{service.uptime} uptime</span>
+            <div className={styles.cardHeader}>
+              <div className={styles.icon}>{system.icon}</div>
+              <span className={`${styles.status} ${styles[system.status]}`}>
+                {system.status}
+              </span>
             </div>
-            <div
-              className="service-status"
-              style={{ color: getStatusColor(service.status) }}
-            >
-              {getStatusIcon(service.status)}
-              <span>{service.status}</span>
+            <div className={styles.value}>{system.value}</div>
+            <div className={styles.label}>{system.name}</div>
+            <div className={styles.chartPlaceholder} />
+            <div className="mt-4 flex justify-between text-xs text-tertiary">
+              <span>Uptime</span>
+              <span>{system.uptime}</span>
             </div>
           </motion.div>
         ))}
       </div>
 
-      <motion.div
-        className="incidents-section"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        <h2>Recent Incidents</h2>
-        <div className="incidents-list">
-          <div className="incident-card">
-            <div className="incident-header">
-              <span className="incident-title">API Response Time Degradation</span>
-              <span className="incident-date">January 10, 2024</span>
-            </div>
-            <p>Resolved - API response times were elevated for approximately 30 minutes.</p>
-          </div>
+      <section className={styles.incidentsSection}>
+        <div className={styles.sectionHeader}>
+          <h2><FiAlertCircle className="inline mr-2" /> Recent Incidents</h2>
         </div>
-      </motion.div>
+        <div className={styles.incidentList}>
+          {incidents.map((incident, index) => (
+            <motion.div
+              key={index}
+              className={styles.incidentItem}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + index * 0.1 }}
+            >
+              <div className={styles.date}>{incident.date}</div>
+              <div className={styles.content}>
+                <h3>{incident.title}</h3>
+                <p>{incident.content}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      <footer className="mt-12 text-center text-sm text-tertiary">
+        <p>System status is updated every 60 seconds. Last updated: {new Date().toLocaleTimeString()}</p>
+      </footer>
     </div>
   );
 };

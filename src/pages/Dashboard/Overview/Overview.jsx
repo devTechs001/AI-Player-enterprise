@@ -15,7 +15,7 @@ import {
   FiCalendar,
 } from 'react-icons/fi';
 import { useAuth } from '@hooks/useAuth';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { videoService } from '@services/video.service';
 import StatCard from '@components/dashboard/StatCard';
 import RecentActivity from '@components/dashboard/RecentActivity';

@@ -36,6 +36,7 @@ const Register = lazy(() => import('@pages/Auth/Register'))
 const ForgotPassword = lazy(() => import('@pages/Auth/ForgotPassword'))
 const ResetPassword = lazy(() => import('@pages/Auth/ResetPassword'))
 const Verify = lazy(() => import('@pages/Auth/Verify'))
+const AuthCallback = lazy(() => import('@pages/Auth/Callback'))
 
 // ==================== DASHBOARD PAGES (Protected) ====================
 const DashboardOverview = lazy(() => import('@pages/Dashboard/Overview'))
@@ -80,6 +81,7 @@ const AdminModeration = lazy(() => import('@pages/Admin/Moderation'))
 const AdminAPI = lazy(() => import('@pages/Admin/API'))
 
 // ==================== DEVELOPER PAGES ====================
+const Devs = lazy(() => import('@pages/Devs'))
 const DevsAPI = lazy(() => import('@pages/Devs/API'))
 const DevsDocumentation = lazy(() => import('@pages/Devs/Documentation'))
 const DevsSandbox = lazy(() => import('@pages/Devs/Sandbox'))
@@ -184,6 +186,10 @@ export const routes = [
       { index: true, element: <Verify /> },
     ],
   },
+  {
+    path: '/auth/callback',
+    element: <AuthCallback />,
+  },
 
   // 4. DASHBOARD (Protected - requires login)
   {
@@ -271,7 +277,8 @@ export const routes = [
     path: '/devs',
     element: <MainLayout />,
     children: [
-      { index: true, element: <DevsAPI /> },
+      { index: true, element: <Devs /> },
+      { path: 'api', element: <DevsAPI /> },
       { path: 'docs', element: <DevsDocumentation /> },
       { path: 'sandbox', element: <DevsSandbox /> },
       { path: 'changelog', element: <DevsChangelog /> },

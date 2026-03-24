@@ -3,7 +3,11 @@ import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      jsxRuntime: 'automatic',
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -27,14 +31,23 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          redux: ['@reduxjs/toolkit', 'react-redux'],
+        manualChunks: (id) => {
+          if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+            return 'vendor';
+          }
+          if (id.includes('@reduxjs/toolkit') || id.includes('react-redux')) {
+            return 'redux';
+          }
+          return undefined;
         },
       },
     },
   },
   optimizeDeps: {
-    exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+    rolldownOptions: {
+      exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+      include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+      force: true,
+    },
   },
 })

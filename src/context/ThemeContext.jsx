@@ -1,20 +1,22 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 export const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('dark');
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     // Load theme from localStorage or system preference
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
+
     if (savedTheme) {
       setTheme(savedTheme);
     } else if (systemPrefersDark) {
       setTheme('dark');
     }
+    setInitialized(true);
   }, []);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const ThemeProvider = ({ children }) => {
 
   const value = {
     theme,
+    initialized,
     setTheme,
     toggleTheme,
   };

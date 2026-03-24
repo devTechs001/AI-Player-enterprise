@@ -128,8 +128,8 @@ const Header = () => {
 
           {/* Developer Link */}
           <Link
-            to="/developers"
-            className={`${styles.navLink} ${location.pathname.startsWith('/developers') ? styles.active : ''}`}
+            to="/devs"
+            className={`${styles.navLink} ${location.pathname.startsWith('/devs') ? styles.active : ''}`}
           >
             <FiCode />
             Developers
@@ -336,7 +336,7 @@ const Header = () => {
                   {item.label}
                 </Link>
               ))}
-              <Link to="/developers" className={styles.mobileNavLink}>
+              <Link to="/devs" className={styles.mobileNavLink}>
                 <FiCode />
                 Developers
               </Link>
