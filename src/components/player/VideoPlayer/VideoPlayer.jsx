@@ -32,11 +32,12 @@ import Timeline from '../Timeline';
 import Chapters from '../Chapters';
 import AIFeatures from '../AIFeatures';
 import Tooltip from '@components/common/Tooltip';
+import DownloadModal from '@components/downloader/DownloadModal/DownloadModal';
 import styles from './VideoPlayer.module.scss';
 
-const VideoPlayer = ({ 
-  media, 
-  autoPlay = false, 
+const VideoPlayer = ({
+  media,
+  autoPlay = false,
   showAI = true,
   showDownload = true,
   onEnded,
@@ -44,12 +45,13 @@ const VideoPlayer = ({
   const containerRef = useRef(null);
   const videoRef = useRef(null);
   const controlsTimeoutRef = useRef(null);
-  
+
   const [showControls, setShowControls] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [showAIPanel, setShowAIPanel] = useState(false);
   const [showChapters, setShowChapters] = useState(false);
   const [settingsTab, setSettingsTab] = useState('quality');
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
   
   const {
     isPlaying,
@@ -331,7 +333,10 @@ const VideoPlayer = ({
 
                 {showDownload && (
                   <Tooltip content="Download">
-                    <button className={styles.controlBtn}>
+                    <button
+                      className={styles.controlBtn}
+                      onClick={() => setShowDownloadModal(true)}
+                    >
                       <FiDownload />
                     </button>
                   </Tooltip>
@@ -409,6 +414,15 @@ const VideoPlayer = ({
         <div className={styles.subtitleDisplay}>
           {/* Subtitle text would be rendered here based on currentTime */}
         </div>
+      )}
+
+      {/* Download Modal */}
+      {showDownload && (
+        <DownloadModal
+          isOpen={showDownloadModal}
+          onClose={() => setShowDownloadModal(false)}
+          url={media?.url}
+        />
       )}
     </div>
   );

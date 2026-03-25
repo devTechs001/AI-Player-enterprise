@@ -14,8 +14,8 @@ import {
 } from 'react-icons/fi';
 import { useDownload } from '@hooks/useDownload';
 import Button from '@components/common/Button';
-import FormatSelector from '../FormatSelector';
-import QualitySelector from '../QualitySelector';
+import FormatSelector from '../FormatSelector/FormatSelector';
+import QualitySelector from '../QualitySelector/QualitySelector';
 import styles from './DownloadModal.module.scss';
 
 const DownloadModal = ({ isOpen, onClose, url }) => {
@@ -32,26 +32,43 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
   // Current download progress
   const currentDownload = downloads.find((d) => d.url === url);
 
-  useEffect(() => {
-    if (isOpen && url) {
-      analyzeMedia();
-    }
-  }, [isOpen, url, analyzeMedia]);
-
   const analyzeMedia = useCallback(async () => {
+    if (!url) return;
+    
     setStep('analyzing');
     setError(null);
 
     const result = await analyzeURL(url);
     if (result.success) {
-      setMediaInfo(result.data);
+      setMediaInfo({
+        ...result.data,
+        thumbnail: result.data.thumbnail || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"%3E%3Crect fill="%231a1a2e" width="320" height="180"/%3E%3Ctext fill="%236366f1" font-family="Arial" font-size="16" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3ENo Preview Available%3C/text%3E%3C/svg%3E',
+      });
       setSelectedQuality(result.data.bestQuality || '1080p');
       setStep('options');
     } else {
       setError(result.error);
       setStep('error');
     }
-  }, [url, setStep, setError, setMediaInfo, setSelectedQuality, analyzeURL]);
+  }, [url, analyzeURL]);
+
+  useEffect(() => {
+    if (isOpen && url) {
+      analyzeMedia();
+    }
+  }, [isOpen, url, analyzeMedia]);
+
+  const getPlatformIcon = (platform) => {
+    const icons = {
+      instagram: '📸',
+      youtube: '▶️',
+      vimeo: '🎬',
+      tiktok: '🎵',
+      twitter: '🐦',
+      facebook: '👍',
+    };
+    return icons[platform] || '🎥';
+  };
 
   const handleDownload = async () => {
     setStep('downloading');
@@ -144,6 +161,10 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
                 <div className={styles.preview}>
                   <img src={mediaInfo.thumbnail} alt={mediaInfo.title} />
                   <div className={styles.info}>
+                    <div className={styles.platformBadge}>
+                      <span>{getPlatformIcon(mediaInfo.platform)}</span>
+                      <span>{mediaInfo.platform?.toUpperCase() || 'VIDEO'}</span>
+                    </div>
                     <h3>{mediaInfo.title}</h3>
                     <div className={styles.meta}>
                       <span>

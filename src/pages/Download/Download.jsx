@@ -3,14 +3,15 @@ import { motion } from 'framer-motion';
 import { FiDownload, FiLink, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import Button from '@components/common/Button';
 import Input from '@components/common/Input';
+import DownloadModal from '@components/downloader/DownloadModal/DownloadModal';
+import { useDownload } from '@hooks/useDownload';
 import './Download.scss';
 
 const Download = () => {
   const [url, setUrl] = useState('');
-  const [format, setFormat] = useState('mp4');
-  const [quality, setQuality] = useState('1080');
+  const [showModal, setShowModal] = useState(false);
+  const { download } = useDownload();
 
-  const formats = ['mp4', 'mkv', 'avi', 'webm', 'mp3', 'aac'];
   const qualities = [
     { value: '2160', label: '4K (2160p)' },
     { value: '1440', label: '2K (1440p)' },
@@ -18,6 +19,12 @@ const Download = () => {
     { value: '720', label: 'HD (720p)' },
     { value: '480', label: 'SD (480p)' },
   ];
+
+  const handleStartDownload = () => {
+    if (url) {
+      setShowModal(true);
+    }
+  };
 
   return (
     <div className="download-page">
@@ -47,35 +54,12 @@ const Download = () => {
           />
         </div>
 
-        <div className="download-options">
-          <div className="option-group">
-            <label>Format</label>
-            <div className="format-selector">
-              {formats.map((f) => (
-                <button
-                  key={f}
-                  className={format === f ? 'active' : ''}
-                  onClick={() => setFormat(f)}
-                >
-                  {f.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="option-group">
-            <label>Quality</label>
-            <select value={quality} onChange={(e) => setQuality(e.target.value)}>
-              {qualities.map((q) => (
-                <option key={q.value} value={q.value}>
-                  {q.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <Button variant="primary" size="large" icon={<FiDownload />}>
+        <Button
+          variant="primary"
+          size="large"
+          icon={<FiDownload />}
+          onClick={handleStartDownload}
+        >
           Start Download
         </Button>
 
@@ -111,6 +95,13 @@ const Download = () => {
           <div className="platform-badge more">+1000 more</div>
         </div>
       </motion.div>
+
+      {/* Download Modal */}
+      <DownloadModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        url={url}
+      />
     </div>
   );
 };

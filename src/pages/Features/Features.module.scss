@@ -37,7 +37,7 @@
 .gradientOrb1 {
   width: 500px;
   height: 500px;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  background: var(--gradient-primary);
   top: -200px;
   left: -100px;
 }
@@ -45,7 +45,7 @@
 .gradientOrb2 {
   width: 400px;
   height: 400px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   bottom: -150px;
   right: -100px;
   animation-delay: 2s;

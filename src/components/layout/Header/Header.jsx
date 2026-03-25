@@ -23,6 +23,7 @@ import {
   FiCreditCard,
   FiShield,
   FiHelpCircle,
+  FiFolder,
 } from 'react-icons/fi';
 import { useAuth } from '@hooks/useAuth';
 import { useTheme } from '@hooks/useTheme';
@@ -32,6 +33,7 @@ import Avatar from '@components/common/Avatar';
 import Badge from '@components/common/Badge';
 import SearchBar from '@components/common/SearchBar';
 import Button from '@components/common/Button';
+import ThemeSwitcher from '@components/common/ThemeSwitcher';
 import NotificationDropdown from './NotificationDropdown';
 import styles from './Header.module.scss';
 
@@ -39,6 +41,7 @@ const navItems = [
   { path: '/', label: 'Home' },
   { path: '/features', label: 'Features' },
   { path: '/download', label: 'Download', icon: FiDownload },
+  { path: '/library', label: 'Library', icon: FiFolder },
   { path: '/music', label: 'Music', icon: FiMusic },
   { path: '/subscription/plans', label: 'Pricing' },
 ];
@@ -161,14 +164,8 @@ const Header = () => {
 
         {/* Right Section */}
         <div className={styles.rightSection}>
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className={styles.iconBtn}
-            title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-          >
-            {theme === 'dark' ? <FiSun /> : <FiMoon />}
-          </button>
+          {/* Theme Switcher */}
+          <ThemeSwitcher />
 
           {isAuthenticated ? (
             <>

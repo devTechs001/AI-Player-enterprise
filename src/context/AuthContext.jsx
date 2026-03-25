@@ -8,6 +8,7 @@ const initialState = {
   user: null,
   isAuthenticated: false,
   isLoading: true,
+  isInitialized: false,
   isGuest: false,
   subscription: null,
   permissions: [],
@@ -27,6 +28,7 @@ const authReducer = (state, action) => {
         subscription: action.payload.subscription,
         permissions: action.payload.permissions || [],
         isLoading: false,
+        isInitialized: true,
         error: null,
       };
     case 'AUTH_GUEST':
@@ -38,6 +40,7 @@ const authReducer = (state, action) => {
         subscription: { plan: 'free', limits: { downloads: 3, quality: '720p' } },
         permissions: ['view', 'download_limited'],
         isLoading: false,
+        isInitialized: true,
         error: null,
       };
     case 'AUTH_FAILURE':
@@ -47,6 +50,7 @@ const authReducer = (state, action) => {
         isAuthenticated: false,
         isGuest: false,
         isLoading: false,
+        isInitialized: true,
         error: action.payload,
       };
     case 'AUTH_LOGOUT':

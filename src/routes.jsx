@@ -21,6 +21,7 @@ const Pricing = lazy(() => import('@pages/Subscription/Plans'))
 const About = lazy(() => import('@pages/About'))
 const Contact = lazy(() => import('@pages/Contact'))
 const Download = lazy(() => import('@pages/Download'))
+const MediaLibrary = lazy(() => import('@pages/MediaLibrary'))
 const Search = lazy(() => import('@pages/Search'))
 const Status = lazy(() => import('@pages/Status'))
 const Blog = lazy(() => import('@pages/Blog'))
@@ -131,6 +132,7 @@ export const routes = [
       { path: 'about', element: <About /> },                 // About us
       { path: 'contact', element: <Contact /> },             // Contact form
       { path: 'download', element: <Download /> },           // Download tool
+      { path: 'library', element: <MediaLibrary /> },        // Media library
       { path: 'search', element: <Search /> },               // Search
       { path: 'status', element: <Status /> },               // System status
       { path: 'blog', element: <Blog /> },                   // Blog

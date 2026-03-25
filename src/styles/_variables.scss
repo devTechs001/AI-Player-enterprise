@@ -173,3 +173,153 @@
   --bg-primary-rgb: 13, 13, 26;
   --bg-secondary-rgb: 18, 18, 42;
 }
+
+// Dark Purple Theme
+[data-theme="dark-purple"] {
+  --bg-primary: #0f0518;
+  --bg-secondary: #1a0a2e;
+  --bg-tertiary: #2d1b4e;
+  --bg-card: #1f0f35;
+  --bg-hover: #3d2366;
+  --bg-active: #4c2d7a;
+
+  --text-primary: #e9d5ff;
+  --text-secondary: #c084fc;
+  --text-tertiary: #a855f7;
+  --text-muted: #7c3aed;
+
+  --border-primary: #4c1d95;
+  --border-secondary: #6d28d9;
+  --border-accent: #a855f7;
+
+  --overlay: rgba(15, 5, 24, 0.9);
+
+  // RGB values for transparency
+  --bg-primary-rgb: 15, 5, 24;
+  --bg-secondary-rgb: 26, 10, 46;
+}
+
+// Purple Blue Theme
+[data-theme="purple-blue"] {
+  --bg-primary: #0a0a1f;
+  --bg-secondary: #0f172e;
+  --bg-tertiary: #1e294b;
+  --bg-card: #121735;
+  --bg-hover: #334155;
+  --bg-active: #475569;
+
+  --text-primary: #e0e7ff;
+  --text-secondary: #a5b4fc;
+  --text-tertiary: #7c3aed;
+  --text-muted: #6366f1;
+
+  --border-primary: #3730a3;
+  --border-secondary: #4f46e5;
+  --border-accent: #7c3aed;
+
+  --overlay: rgba(10, 10, 31, 0.9);
+
+  // RGB values for transparency
+  --bg-primary-rgb: 10, 10, 31;
+  --bg-secondary-rgb: 15, 23, 46;
+}
+
+// Ocean Blue Theme
+[data-theme="ocean-blue"] {
+  --bg-primary: #081018;
+  --bg-secondary: #0c1929;
+  --bg-tertiary: #152233;
+  --bg-card: #0e1f2e;
+  --bg-hover: #1e3a5f;
+  --bg-active: #254569;
+
+  --text-primary: #e0f2fe;
+  --text-secondary: #7dd3fc;
+  --text-tertiary: #0ea5e9;
+  --text-muted: #0284c7;
+
+  --border-primary: #0c4a6e;
+  --border-secondary: #075985;
+  --border-accent: #0ea5e9;
+
+  --overlay: rgba(8, 16, 24, 0.9);
+
+  // RGB values for transparency
+  --bg-primary-rgb: 8, 16, 24;
+  --bg-secondary-rgb: 12, 25, 41;
+}
+
+// Sunset Orange Theme
+[data-theme="sunset-orange"] {
+  --bg-primary: #1a0f0a;
+  --bg-secondary: #2a1810;
+  --bg-tertiary: #3d2318;
+  --bg-card: #2f1a12;
+  --bg-hover: #4a2f22;
+  --bg-active: #5c3a2a;
+
+  --text-primary: #ffedd5;
+  --text-secondary: #fdba74;
+  --text-tertiary: #f97316;
+  --text-muted: #ea580c;
+
+  --border-primary: #7c2d12;
+  --border-secondary: #9a3412;
+  --border-accent: #f97316;
+
+  --overlay: rgba(26, 15, 10, 0.9);
+
+  // RGB values for transparency
+  --bg-primary-rgb: 26, 15, 10;
+  --bg-secondary-rgb: 42, 24, 16;
+}
+
+// Forest Green Theme
+[data-theme="forest-green"] {
+  --bg-primary: #0a1a0f;
+  --bg-secondary: #0f2914;
+  --bg-tertiary: #14381c;
+  --bg-card: #0e2414;
+  --bg-hover: #1a4a26;
+  --bg-active: #225c30;
+
+  --text-primary: #dcfce7;
+  --text-secondary: #86efac;
+  --text-tertiary: #22c55e;
+  --text-muted: #16a34a;
+
+  --border-primary: #14532d;
+  --border-secondary: #166534;
+  --border-accent: #22c55e;
+
+  --overlay: rgba(10, 26, 15, 0.9);
+
+  // RGB values for transparency
+  --bg-primary-rgb: 10, 26, 15;
+  --bg-secondary-rgb: 15, 41, 20;
+}
+
+// Cyberpunk Theme
+[data-theme="cyberpunk"] {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #252542;
+  --bg-tertiary: #32325a;
+  --bg-card: #2a2a3f;
+  --bg-hover: #3f3f5f;
+  --bg-active: #4a4a6f;
+
+  --text-primary: #fef3c7;
+  --text-secondary: #fbbf24;
+  --text-tertiary: #f43f5e;
+  --text-muted: #d97706;
+
+  --border-primary: #7c2d12;
+  --border-secondary: #9a3412;
+  --border-accent: #fbbf24;
+
+  --overlay: rgba(26, 26, 46, 0.9);
+
+  // RGB values for transparency
+  --bg-primary-rgb: 26, 26, 46;
+  --bg-secondary-rgb: 37, 37, 66;
+}

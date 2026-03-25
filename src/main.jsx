@@ -13,6 +13,8 @@ import { ThemeProvider } from './context/ThemeContext'
 import { AuthProvider } from './context/AuthContext'
 import { PlayerProvider } from './context/PlayerContext'
 import { NotificationProvider } from './context/NotificationContext'
+import { DownloadProvider } from './context/DownloadContext'
+import { MediaLibraryProvider } from './context/MediaLibraryContext'
 import ErrorBoundary from './components/common/ErrorBoundary'
 
 import './styles/main.scss'
@@ -37,21 +39,25 @@ createRoot(document.getElementById('root')).render(
             <ThemeProvider>
               <AuthProvider>
                 <NotificationProvider>
-                  <PlayerProvider>
-                    <App />
-                    <Toaster
-                      position="top-right"
-                      toastOptions={{
-                        duration: 4000,
-                        style: {
-                          background: '#1e293b',
-                          color: '#f1f5f9',
-                          borderRadius: '12px',
-                          border: '1px solid rgba(99, 102, 241, 0.2)',
-                        },
-                      }}
-                    />
-                  </PlayerProvider>
+                  <DownloadProvider>
+                    <MediaLibraryProvider>
+                      <PlayerProvider>
+                        <App />
+                        <Toaster
+                          position="top-right"
+                          toastOptions={{
+                            duration: 4000,
+                            style: {
+                              background: '#1e293b',
+                              color: '#f1f5f9',
+                              borderRadius: '12px',
+                              border: '1px solid rgba(99, 102, 241, 0.2)',
+                            },
+                          }}
+                        />
+                      </PlayerProvider>
+                    </MediaLibraryProvider>
+                  </DownloadProvider>
                 </NotificationProvider>
               </AuthProvider>
             </ThemeProvider>

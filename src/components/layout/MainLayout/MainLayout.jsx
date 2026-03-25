@@ -10,7 +10,7 @@ const MainLayout = ({ children }) => {
     <div className="main-layout">
       <Header />
       <main className="main-content">
-        {children || <Outlet />}
+        {children !== undefined ? children : <Outlet />}
       </main>
       <Footer />
     </div>
@@ -18,7 +18,7 @@ const MainLayout = ({ children }) => {
 };
 
 MainLayout.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default MainLayout;

@@ -203,6 +203,17 @@ export const DownloadProvider = ({ children }) => {
         },
       });
 
+      // Add to download history
+      await downloadService.addToDownloadHistory({
+        url: item.url,
+        title: item.title,
+        filename: item.filename,
+        format: item.format,
+        quality: item.quality,
+        fileSize: item.total,
+        timestamp: new Date().toISOString(),
+      });
+
       abortControllers.current.delete(item.id);
     } catch (error) {
       if (error.name === 'AbortError') {
