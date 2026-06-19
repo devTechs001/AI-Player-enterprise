@@ -1,6 +1,12 @@
 import { forwardRef } from 'react';
 import './Button.scss';
 
+const sizeMap = {
+  small: 'sm',
+  medium: 'md',
+  large: 'lg',
+};
+
 const Button = forwardRef(({
   children,
   variant = 'primary',
@@ -12,10 +18,11 @@ const Button = forwardRef(({
   className = '',
   ...props
 }, ref) => {
+  const sizeClass = sizeMap[size] || size;
   return (
     <button
       ref={ref}
-      className={`btn ${variant} ${size} ${loading ? 'loading' : ''} ${disabled ? 'disabled' : ''} ${className}`}
+      className={`btn ${variant} ${sizeClass} ${loading ? 'loading' : ''} ${disabled ? 'disabled' : ''} ${className}`}
       disabled={disabled || loading}
       {...props}
     >

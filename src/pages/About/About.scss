@@ -1,6 +1,11 @@
 .about-page {
   max-width: 800px;
   padding: 2rem 1rem;
+  margin: 0 auto;
+
+  @media (max-width: 640px) {
+    padding: 1.5rem 1rem;
+  }
 }
 
 .page-header {
@@ -10,13 +15,21 @@
   h1 {
     font-size: 2rem;
     font-weight: 800;
-    color: #f1f5f9;
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
+
+    @media (max-width: 640px) {
+      font-size: 1.5rem;
+    }
   }
 
   p {
-    color: #94a3b8;
+    color: var(--text-secondary);
     font-size: 1.125rem;
+
+    @media (max-width: 640px) {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -24,23 +37,39 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media (max-width: 640px) {
+    gap: 1.5rem;
+  }
 }
 
 .about-section {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
   border-radius: 16px;
   padding: 2rem;
+
+  @media (max-width: 640px) {
+    padding: 1.5rem;
+  }
 
   h2 {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #f1f5f9;
+    color: var(--text-primary);
     margin-bottom: 1rem;
+
+    @media (max-width: 640px) {
+      font-size: 1.125rem;
+    }
   }
 
   p {
-    color: #94a3b8;
+    color: var(--text-secondary);
     line-height: 1.8;
+
+    @media (max-width: 640px) {
+      font-size: 0.9rem;
+    }
   }
 }

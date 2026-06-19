@@ -35,15 +35,22 @@ class DownloadService {
       const platform = this.detectPlatform(url);
       const title = this.generateTitleFromURL(url, platform);
       
+      const isHD = platform !== 'unknown';
       return {
         title: title,
         thumbnail: 'https://via.placeholder.com/320x180',
-        duration: platform === 'instagram' ? 60 : 180,
+        duration: platform === 'instagram' ? 60 : platform === 'youtube' ? 420 : 180,
         fileSize: platform === 'instagram' ? 15 * 1024 * 1024 : 50 * 1024 * 1024,
         bestQuality: '1080p',
-        availableFormats: ['mp4', 'webm'],
-        availableQualities: ['1080p', '720p', '480p', '360p'],
+        availableFormats: ['mp4', 'webm', 'mkv', 'avi', 'mov'],
+        availableQualities: ['2160p', '1080p', '720p', '480p', '360p'],
+        resolution: isHD ? '1920x1080' : '1280x720',
+        fps: 30,
+        codec: 'H.264',
+        audioCodec: 'AAC',
+        audioBitrate: '192kbps',
         estimatedSize: {
+          '2160p': platform === 'instagram' ? 30 * 1024 * 1024 : 200 * 1024 * 1024,
           '1080p': platform === 'instagram' ? 15 * 1024 * 1024 : 50 * 1024 * 1024,
           '720p': platform === 'instagram' ? 8 * 1024 * 1024 : 25 * 1024 * 1024,
           '480p': platform === 'instagram' ? 4 * 1024 * 1024 : 10 * 1024 * 1024,

@@ -116,6 +116,61 @@
     word-break: break-all;
     max-width: 100%;
   }
+
+  .processingLine {
+    width: 100%;
+    max-width: 28rem;
+    height: 4px;
+    background: var(--border-primary);
+    border-radius: 2px;
+    overflow: hidden;
+
+    .processingBar {
+      height: 100%;
+      width: 30%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+      border-radius: 2px;
+      animation: processingSlide 1.5s ease-in-out infinite;
+    }
+  }
+
+  .processingSteps {
+    display: flex;
+    gap: var(--space-6);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+
+    .stepActive {
+      color: var(--color-primary);
+      font-weight: 600;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -1.2rem;
+        left: 50%;
+        width: 6px;
+        height: 6px;
+        background: var(--color-primary);
+        border-radius: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    .stepPending {
+      opacity: 0.5;
+    }
+  }
+}
+
+@keyframes processingSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
 }
 
 // Error State

@@ -1,9 +1,16 @@
+.loader-fullpage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: var(--bg-primary);
+}
+
 .loader {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  // Sizes
   &.sm {
     .loader-ring {
       width: 20px;
@@ -51,8 +58,8 @@
   inset: 0;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #8b5cf6;
-  border-right-color: #a78bfa;
+  border-top-color: var(--secondary-500);
+  border-right-color: var(--secondary-400);
 
   .loader.dots & {
     display: none;
@@ -66,6 +73,6 @@
 }
 
 .loader-dot {
-  background: #8b5cf6;
+  background: var(--secondary-500);
   border-radius: 50%;
 }

@@ -326,6 +326,16 @@
 }
 
 // Stats Section
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+
+  @media (min-width: 768px) {
+    padding: 0 var(--space-6);
+  }
+}
+
 .stats {
   padding: 4rem 1.5rem;
   background: var(--bg-secondary);

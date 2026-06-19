@@ -1,13 +1,24 @@
 import { motion } from 'framer-motion';
-import { FiDownload, FiClock, FiCheck, FiX } from 'react-icons/fi';
+import { FiDownload, FiClock, FiCheck, FiX, FiRefreshCw } from 'react-icons/fi';
+import { useDownload } from '@hooks/useDownload';
 import './Downloads.scss';
 
+const formatSize = (bytes) => {
+  if (!bytes) return '';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+};
+
 const Downloads = () => {
-  const downloads = [
-    { id: 1, title: 'Introduction to AI', progress: 100, status: 'completed', size: '245 MB' },
-    { id: 2, title: 'Advanced Machine Learning', progress: 75, status: 'downloading', size: '1.2 GB' },
-    { id: 3, title: 'Deep Learning Fundamentals', progress: 0, status: 'queued', size: '890 MB' },
-  ];
+  const { downloads, queue, history, cancelDownload, retryDownload } = useDownload();
+
+  const activeDownloads = downloads.filter(
+    (d) => d.status === 'downloading' || d.status === 'paused'
+  );
+  const queuedDownloads = [...queue, ...downloads.filter((d) => d.status === 'queued')];
+  const completedDownloads = history.filter((d) => d.status === 'completed');
 
   return (
     <div className="downloads-page">
@@ -16,11 +27,10 @@ const Downloads = () => {
         <p>Manage your video downloads</p>
       </div>
 
-      {/* Active Downloads */}
       <section className="section">
-        <h2>Active Downloads</h2>
+        <h2>Active Downloads ({activeDownloads.length})</h2>
         <div className="downloads-list">
-          {downloads.filter(d => d.status === 'downloading').map((download) => (
+          {activeDownloads.map((download) => (
             <motion.div
               key={download.id}
               className="download-item"
@@ -32,45 +42,68 @@ const Downloads = () => {
                 <div className="progress-bar">
                   <div className="progress" style={{ width: `${download.progress}%` }} />
                 </div>
-                <span className="progress-text">{download.progress}% complete</span>
+                <span className="progress-text">
+                  {download.progress}% complete
+                  {download.speed ? ` - ${formatSize(download.speed)}/s` : ''}
+                </span>
               </div>
-              <button className="cancel-btn"><FiX /></button>
+              <button className="cancel-btn" onClick={() => cancelDownload(download.id)}>
+                <FiX />
+              </button>
             </motion.div>
           ))}
+          {activeDownloads.length === 0 && (
+            <p className="empty-state">No active downloads</p>
+          )}
         </div>
       </section>
 
-      {/* Queued */}
       <section className="section">
-        <h2>Queued</h2>
+        <h2>Queued ({queuedDownloads.length})</h2>
         <div className="downloads-list">
-          {downloads.filter(d => d.status === 'queued').map((download) => (
+          {queuedDownloads.map((download) => (
             <div key={download.id} className="download-item queued">
               <div className="download-info">
                 <h3>{download.title}</h3>
-                <span className="size">{download.size}</span>
+                <span className="size">
+                  {formatSize(download.total || download.fileSize)}
+                </span>
               </div>
-              <button className="cancel-btn"><FiX /></button>
+              <button className="cancel-btn" onClick={() => cancelDownload(download.id)}>
+                <FiX />
+              </button>
             </div>
           ))}
+          {queuedDownloads.length === 0 && (
+            <p className="empty-state">No queued downloads</p>
+          )}
         </div>
       </section>
 
-      {/* Completed */}
       <section className="section">
-        <h2>Completed</h2>
+        <h2>Completed ({completedDownloads.length})</h2>
         <div className="downloads-list">
-          {downloads.filter(d => d.status === 'completed').map((download) => (
+          {completedDownloads.map((download) => (
             <div key={download.id} className="download-item completed">
               <div className="download-info">
                 <h3>{download.title}</h3>
-                <span className="size">{download.size}</span>
+                <span className="size">{formatSize(download.fileSize)}</span>
               </div>
               <div className="actions">
-                <button className="action-btn"><FiClock /> Watch Later</button>
+                {download.status === 'failed' && (
+                  <button
+                    className="action-btn"
+                    onClick={() => retryDownload(download.id)}
+                  >
+                    <FiRefreshCw /> Retry
+                  </button>
+                )}
               </div>
             </div>
           ))}
+          {completedDownloads.length === 0 && (
+            <p className="empty-state">No completed downloads</p>
+          )}
         </div>
       </section>
     </div>

@@ -1,43 +1,48 @@
-// MainLayout Styles
-
 .main-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg-primary);
+
+  @media (max-width: 768px) {
+    padding-bottom: var(--mobile-nav-height, 60px);
+  }
 }
 
 .main-content {
   flex: 1;
   width: 100%;
-  padding-top: 80px; // Account for fixed header
-  
+  padding-top: var(--header-height, 64px);
+
   > * {
     width: 100%;
   }
 }
 
-// Container for centered content
 .container {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
 
   @media (min-width: 768px) {
-    padding: 0 2rem;
+    padding: 0 1.5rem;
   }
 
   @media (min-width: 1024px) {
-    padding: 0 3rem;
+    padding: 0 2rem;
   }
 }
 
-// Section spacing
 .section {
-  padding: 4rem 0;
+  padding: 3rem 0;
 
   @media (min-width: 768px) {
+    padding: 5rem 0;
+  }
+
+  @media (min-width: 1024px) {
     padding: 6rem 0;
   }
 }

@@ -3,29 +3,29 @@
   top: 100%;
   right: 0;
   width: 300px;
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  z-index: 100;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
 }
 
 .dropdown-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: #f1f5f9;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-primary);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .dropdown-content {
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 .empty-message {
-  color: #94a3b8;
+  color: var(--text-tertiary);
   text-align: center;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
 }

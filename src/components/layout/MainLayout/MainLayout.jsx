@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import MobileNav from '../MobileNav/MobileNav';
 import './MainLayout.scss';
 
 const MainLayout = ({ children }) => {
@@ -13,12 +12,9 @@ const MainLayout = ({ children }) => {
         {children !== undefined ? children : <Outlet />}
       </main>
       <Footer />
+      <MobileNav />
     </div>
   );
-};
-
-MainLayout.propTypes = {
-  children: PropTypes.node,
 };
 
 export default MainLayout;

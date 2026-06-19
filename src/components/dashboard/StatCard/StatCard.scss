@@ -1,11 +1,11 @@
 .stat-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-lg);
 }
 
 .stat-icon {
@@ -14,10 +14,11 @@
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(168, 85, 247, 0.2));
-  border-radius: 10px;
-  color: #a78bfa;
-  font-size: 1.25rem;
+  background: var(--gradient-primary);
+  opacity: 0.9;
+  border-radius: var(--radius-md);
+  color: white;
+  font-size: var(--text-xl);
 }
 
 .stat-content {
@@ -27,29 +28,29 @@
 }
 
 .stat-value {
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .stat-label {
-  font-size: 0.8125rem;
-  color: #94a3b8;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
 }
 
 .stat-change {
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   padding: 0.25rem 0.5rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 
   &.positive {
-    color: #10b981;
+    color: var(--accent-green);
     background: rgba(16, 185, 129, 0.1);
   }
 
   &.negative {
-    color: #ef4444;
+    color: var(--accent-red);
     background: rgba(239, 68, 68, 0.1);
   }
 }

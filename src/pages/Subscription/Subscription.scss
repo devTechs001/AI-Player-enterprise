@@ -1,48 +1,46 @@
-// Subscription Page Styles
-
 .subscription-page {
   max-width: 800px;
-  padding: 2rem 1rem;
+  padding: var(--space-8) var(--space-4);
 }
 
-.page-header {
-  margin-bottom: 2rem;
+.subscription-page .page-header {
+  margin-bottom: var(--space-8);
 
   h1 {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
     font-weight: 700;
-    color: #f1f5f9;
+    color: var(--text-primary);
     margin-bottom: 0.25rem;
   }
 
   p {
-    color: #94a3b8;
-    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
   }
 }
 
 .checkout-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: var(--space-12);
 
   h1 {
-    font-size: 2rem;
+    font-size: var(--text-3xl);
     font-weight: 800;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
   }
 
   p {
     color: var(--text-secondary);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
   }
 }
 
 .plans-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
@@ -50,13 +48,13 @@
 }
 
 .plan-card {
-  padding: 2rem;
+  padding: var(--space-8);
   background: var(--bg-card);
   border: 1px solid var(--border-primary);
-  border-radius: 1.5rem;
+  border-radius: var(--radius-2xl);
   text-align: center;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
 
   &:hover {
     transform: translateY(-4px);
@@ -75,59 +73,59 @@
     transform: translateX(-50%);
     background: var(--gradient-primary);
     color: white;
-    padding: 0.25rem 1rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
+    padding: 0.25rem var(--space-4);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
     font-weight: 600;
   }
 
   .plan-icon {
     width: 64px;
     height: 64px;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto var(--space-6);
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(139, 92, 246, 0.1);
-    border-radius: 1rem;
+    border-radius: var(--radius-xl);
     color: var(--primary-500);
-    font-size: 2rem;
+    font-size: var(--text-3xl);
   }
 
   h3 {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
   }
 
   .plan-price {
-    font-size: 2.5rem;
+    font-size: var(--text-4xl);
     font-weight: 800;
     color: var(--text-primary);
 
     span {
-      font-size: 1rem;
+      font-size: var(--text-base);
       color: var(--text-secondary);
     }
   }
 
   .plan-description {
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-6);
   }
 
   .plan-features {
     list-style: none;
     padding: 0;
-    margin: 0 0 2rem;
+    margin: 0 0 var(--space-8);
     text-align: left;
 
     li {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 0;
+      gap: var(--space-3);
+      padding: var(--space-3) 0;
       color: var(--text-secondary);
       border-bottom: 1px solid var(--border-primary);
 
@@ -144,83 +142,83 @@
 }
 
 .checkout-card {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
   overflow: hidden;
 }
 
 .order-summary {
-  padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: var(--space-6);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-primary);
 
   h2 {
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 600;
-    color: #f1f5f9;
-    margin-bottom: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
   }
 }
 
 .summary-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem 0;
-  color: #94a3b8;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: var(--space-3) 0;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .summary-total {
   display: flex;
   justify-content: space-between;
-  padding-top: 1rem;
+  padding-top: var(--space-4);
   font-weight: 700;
-  color: #f1f5f9;
-  font-size: 1.125rem;
+  color: var(--text-primary);
+  font-size: var(--text-lg);
 }
 
 .payment-form {
-  padding: 1.5rem;
+  padding: var(--space-6);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 
   h2 {
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 600;
-    color: #f1f5f9;
+    color: var(--text-primary);
   }
 }
 
-.form-group {
+.subscription-form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 
   label {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     font-weight: 500;
-    color: #f1f5f9;
+    color: var(--text-primary);
   }
 
   input {
-    padding: 0.75rem 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #f1f5f9;
-    font-size: 0.9375rem;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
     outline: none;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 
     &:focus {
       border-color: rgba(139, 92, 246, 0.3);
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--bg-hover);
     }
 
     &::placeholder {
-      color: #64748b;
+      color: var(--text-tertiary);
     }
   }
 }
@@ -230,10 +228,10 @@
 
   svg {
     position: absolute;
-    left: 1rem;
+    left: var(--space-4);
     top: 50%;
     transform: translateY(-50%);
-    color: #64748b;
+    color: var(--text-tertiary);
     pointer-events: none;
   }
 
@@ -242,47 +240,46 @@
   }
 }
 
-.form-row {
+.subscription-form-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .secure-notice {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem;
+  gap: var(--space-2);
+  padding: var(--space-4);
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.2);
-  border-radius: 10px;
-  color: #10b981;
-  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  color: var(--accent-green);
+  font-size: var(--text-sm);
 
   svg {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 }
 
-// Billing Page
 .billing-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-6);
 }
 
 .billing-card {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
 
   h2 {
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 600;
-    color: #f1f5f9;
-    margin-bottom: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-4);
   }
 }
 
@@ -290,14 +287,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  margin-bottom: 1rem;
+  padding: var(--space-4);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
 
   @media (max-width: 640px) {
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-4);
     align-items: flex-start;
   }
 }
@@ -305,36 +302,36 @@
 .status-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .plan-name {
   font-weight: 600;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .renewal-date {
-  color: #94a3b8;
-  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
 }
 
 .billing-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
 .payment-method {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
 
   svg {
-    font-size: 1.5rem;
-    color: #8b5cf6;
+    font-size: var(--text-2xl);
+    color: var(--secondary-500);
   }
 
   div {
@@ -344,12 +341,12 @@
 
     span:first-child {
       font-weight: 500;
-      color: #f1f5f9;
+      color: var(--text-primary);
     }
 
     span:last-child {
-      font-size: 0.8125rem;
-      color: #94a3b8;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
     }
   }
 }
@@ -357,16 +354,16 @@
 .invoices-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .invoice-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
 
   @media (max-width: 640px) {
     flex-wrap: wrap;
@@ -376,11 +373,11 @@
 .invoice-info {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   flex: 1;
 
   svg {
-    color: #8b5cf6;
+    color: var(--secondary-500);
   }
 
   div {
@@ -391,25 +388,24 @@
 
 .invoice-id {
   font-weight: 500;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
 .invoice-date {
-  font-size: 0.8125rem;
-  color: #94a3b8;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
 }
 
 .invoice-amount {
   font-weight: 600;
-  color: #f1f5f9;
+  color: var(--text-primary);
 }
 
-// Success Page
 .success-page {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
+  min-height: 60dvh;
 }
 
 .success-content {
@@ -423,30 +419,30 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  margin: 0 auto 1.5rem;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
+  margin: 0 auto var(--space-6);
+  background: rgba(16, 185, 129, 0.15);
   border-radius: 50%;
-  color: #10b981;
-  font-size: 2.5rem;
+  color: var(--accent-green);
+  font-size: var(--text-4xl);
 }
 
 .success-content h1 {
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 700;
-  color: #f1f5f9;
-  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
 }
 
 .success-content p {
-  color: #94a3b8;
-  font-size: 1rem;
+  color: var(--text-secondary);
+  font-size: var(--text-base);
   line-height: 1.7;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-8);
 }
 
 .success-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   justify-content: center;
   flex-wrap: wrap;
 }

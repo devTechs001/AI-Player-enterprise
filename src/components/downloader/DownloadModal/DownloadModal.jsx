@@ -11,12 +11,32 @@ import {
   FiAlertCircle,
   FiClock,
   FiHardDrive,
+  FiScissors,
+  FiType,
 } from 'react-icons/fi';
 import { useDownload } from '@hooks/useDownload';
 import Button from '@components/common/Button';
 import FormatSelector from '../FormatSelector/FormatSelector';
 import QualitySelector from '../QualitySelector/QualitySelector';
 import styles from './DownloadModal.module.scss';
+
+const formatLabels = {
+  mp4: 'MP4',
+  webm: 'WebM',
+  avi: 'AVI',
+  mov: 'MOV',
+  mkv: 'MKV',
+  flv: 'FLV',
+  wmv: 'WMV',
+  '3gp': '3GP',
+  mp3: 'MP3',
+  aac: 'AAC',
+  wav: 'WAV',
+  flac: 'FLAC',
+  ogg: 'OGG',
+  m4a: 'M4A',
+  wma: 'WMA',
+};
 
 const DownloadModal = ({ isOpen, onClose, url }) => {
   const [step, setStep] = useState('analyzing'); // analyzing, options, downloading, complete
@@ -25,12 +45,31 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
   const [selectedQuality, setSelectedQuality] = useState('1080p');
   const [downloadAudioOnly, setDownloadAudioOnly] = useState(false);
   const [includeSubtitles, setIncludeSubtitles] = useState(false);
+  const [trimStart, setTrimStart] = useState(0);
+  const [trimEnd, setTrimEnd] = useState(0);
+  const [selectedAudioTrack, setSelectedAudioTrack] = useState('original');
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [error, setError] = useState(null);
 
   const { analyzeURL, download, downloads } = useDownload();
 
   // Current download progress
   const currentDownload = downloads.find((d) => d.url === url);
+
+  // Watch for download completion (item removed from active downloads)
+  useEffect(() => {
+    if (step === 'downloading' && !currentDownload) {
+      setStep('complete');
+    }
+  }, [step, currentDownload]);
+
+  // Watch for download failure
+  useEffect(() => {
+    if (step === 'downloading' && currentDownload?.status === 'failed') {
+      setError(currentDownload.error || 'Download failed');
+      setStep('error');
+    }
+  }, [step, currentDownload]);
 
   const analyzeMedia = useCallback(async () => {
     if (!url) return;
@@ -141,6 +180,14 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
                 </div>
                 <p>Analyzing video...</p>
                 <span className={styles.url}>{url}</span>
+                <div className={styles.processingLine}>
+                  <div className={styles.processingBar} />
+                </div>
+                <div className={styles.processingSteps}>
+                  <span className={styles.stepActive}>Parsing URL</span>
+                  <span className={styles.stepPending}>Extracting metadata</span>
+                  <span className={styles.stepPending}>Detecting formats</span>
+                </div>
               </div>
             )}
 
@@ -176,6 +223,16 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
                         {formatBytes(mediaInfo.fileSize)}
                       </span>
                     </div>
+                    {mediaInfo.resolution && (
+                      <div className={styles.meta}>
+                        <span>
+                          <FiVideo />
+                          {mediaInfo.resolution}
+                        </span>
+                        {mediaInfo.fps && <span>{mediaInfo.fps} fps</span>}
+                        {mediaInfo.codec && <span>{mediaInfo.codec}</span>}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -248,6 +305,72 @@ const DownloadModal = ({ isOpen, onClose, url }) => {
                     <span>Include subtitles (if available)</span>
                   </label>
                 </div>
+
+                {/* Advanced Options Toggle */}
+                <button
+                  className={styles.advancedToggle}
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                >
+                  <FiSettings />
+                  <span>Advanced Options</span>
+                  <span className={`${styles.toggleArrow} ${showAdvanced ? styles.open : ''}`}>
+                    &#9660;
+                  </span>
+                </button>
+
+                {showAdvanced && (
+                  <div className={styles.advancedOptions}>
+                    {/* Trim Controls */}
+                    <div className={styles.trimSection}>
+                      <label>
+                        <FiScissors />
+                        Trim Video
+                      </label>
+                      <div className={styles.trimInputs}>
+                        <div className={styles.trimField}>
+                          <span>Start:</span>
+                          <input
+                            type="number"
+                            min={0}
+                            max={mediaInfo.duration}
+                            value={trimStart}
+                            onChange={(e) => setTrimStart(Number(e.target.value))}
+                          />
+                          <span>s</span>
+                        </div>
+                        <div className={styles.trimField}>
+                          <span>End:</span>
+                          <input
+                            type="number"
+                            min={0}
+                            max={mediaInfo.duration}
+                            value={trimEnd}
+                            onChange={(e) => setTrimEnd(Number(e.target.value))}
+                          />
+                          <span>s</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Audio Track Selection */}
+                    {!downloadAudioOnly && (
+                      <div className={styles.audioTrackSection}>
+                        <label>
+                          <FiMusic />
+                          Audio Track
+                        </label>
+                        <select
+                          value={selectedAudioTrack}
+                          onChange={(e) => setSelectedAudioTrack(e.target.value)}
+                        >
+                          <option value="original">Original</option>
+                          <option value="track1">Track 1</option>
+                          <option value="track2">Track 2</option>
+                        </select>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {/* Estimated Size */}
                 <div className={styles.estimatedSize}>

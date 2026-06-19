@@ -1,15 +1,24 @@
 .unauthorized-page {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
   background: var(--bg-primary);
+
+  @media (max-width: 640px) {
+    padding: 1.5rem;
+  }
 }
 
 .content {
   text-align: center;
   max-width: 500px;
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+  }
 }
 
 .icon {
@@ -23,18 +32,33 @@
   border-radius: 50%;
   color: var(--accent-red);
   font-size: 2.5rem;
+
+  @media (max-width: 640px) {
+    width: 64px;
+    height: 64px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
 h1 {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 1rem;
+
+  @media (max-width: 640px) {
+    font-size: 1.5rem;
+  }
 }
 
 p {
   color: var(--text-secondary);
   line-height: 1.7;
   margin-bottom: 2rem;
+
+  @media (max-width: 640px) {
+    font-size: 0.9rem;
+  }
 }
 
 .actions {
@@ -42,4 +66,14 @@ p {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+
+    a {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
 }

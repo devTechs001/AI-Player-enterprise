@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import './Loader.scss';
 
-const Loader = ({ size = 'md', variant = 'default' }) => {
-  return (
+const Loader = ({ size = 'md', variant = 'default', fullPage = false }) => {
+  const content = (
     <div className={`loader ${size} ${variant}`}>
       <motion.div
         className="loader-ring"
@@ -35,6 +35,12 @@ const Loader = ({ size = 'md', variant = 'default' }) => {
       )}
     </div>
   );
+
+  if (fullPage) {
+    return <div className="loader-fullpage">{content}</div>;
+  }
+
+  return content;
 };
 
 export default Loader;

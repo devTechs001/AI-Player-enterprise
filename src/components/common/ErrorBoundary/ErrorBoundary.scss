@@ -2,9 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: #0f172a;
-  padding: 2rem;
+  min-height: 100dvh;
+  background: var(--bg-primary);
+  padding: var(--space-8);
 }
 
 .error-content {
@@ -18,64 +18,81 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto var(--space-6);
   background: rgba(239, 68, 68, 0.1);
   border-radius: 50%;
-  color: #ef4444;
-  font-size: 2.5rem;
+  color: var(--accent-red);
+  font-size: var(--text-4xl);
 }
 
 .error-content h2 {
-  font-size: 1.5rem;
+  font-size: var(--text-2xl);
   font-weight: 700;
-  color: #f1f5f9;
-  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
 }
 
 .error-content p {
-  color: #94a3b8;
-  font-size: 1rem;
+  color: var(--text-secondary);
+  font-size: var(--text-base);
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .error-details {
   text-align: left;
-  margin-bottom: 1.5rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  padding: 1rem;
+  margin-bottom: var(--space-6);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
 
   summary {
     cursor: pointer;
-    color: #94a3b8;
-    font-size: 0.875rem;
-    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-3);
 
     &:hover {
-      color: #f1f5f9;
+      color: var(--text-primary);
     }
   }
 
   pre {
-    font-size: 0.75rem;
-    color: #64748b;
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
     margin: 0;
-    padding: 0.75rem;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
+    padding: var(--space-3);
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
 
     &:not(:last-child) {
-      margin-bottom: 0.75rem;
+      margin-bottom: var(--space-3);
     }
   }
 }
 
 .error-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .error-icon {
+    width: 60px;
+    height: 60px;
+    font-size: var(--text-3xl);
+  }
+
+  .error-content h2 {
+    font-size: var(--text-xl);
+  }
+
+  .error-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

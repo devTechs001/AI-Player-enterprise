@@ -1,5 +1,8 @@
 // Main Styles Entry Point
 
+// Design tokens (colors, spacing, shadows, themes)
+@import './variables';
+
 // Base styles
 * {
   box-sizing: border-box;
@@ -24,6 +27,7 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: auto;
   // Prevent pull-to-refresh on mobile
   overscroll-behavior-y: contain;
 }
@@ -62,21 +66,29 @@ body {
 
 // Scrollbar Styles
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--bg-secondary, #1e293b);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--bg-tertiary, #475569);
-  border-radius: 4px;
+  border-radius: 5px;
+  border: 2px solid var(--bg-secondary, #1e293b);
 
   &:hover {
-    background: var(--bg-quaternary, #64748b);
+    background: var(--accent-primary, #8b5cf6);
   }
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-tertiary, #475569) var(--bg-secondary, #1e293b);
 }
 
 // Selection

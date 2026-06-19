@@ -465,7 +465,7 @@
 
 // Light theme adjustments
 :global([data-theme="light"]) {
-  .register {
+  .login {
     .formSection {
       background: var(--bg-secondary);
     }
@@ -480,7 +480,7 @@
 
 // Neon theme adjustments
 :global([data-theme="neon"]) {
-  .register {
+  .login {
     .visualSection .gradientBg {
       background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-pink) 100%);
       opacity: 0.2;
