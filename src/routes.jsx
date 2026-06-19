@@ -146,7 +146,13 @@ export const routes = [
     ],
   },
 
-  // 2b. ERROR/ACCESS PAGES
+  // 2b. REDIRECTS (old URLs to new)
+  {
+    path: '/subscription/plans',
+    element: <Navigate to="/pricing" replace />,
+  },
+
+  // 2c. ERROR/ACCESS PAGES
   {
     path: '/unauthorized',
     element: <Unauthorized />,

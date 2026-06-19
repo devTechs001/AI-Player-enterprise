@@ -17,6 +17,23 @@
     cursor: pointer;
     transition: all var(--transition-fast);
 
+    .formatInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      text-align: left;
+    }
+
+    .formatLabel {
+      font-weight: 600;
+      font-size: var(--text-sm);
+    }
+
+    .formatSize {
+      font-size: 0.65rem;
+      opacity: 0.7;
+    }
+
     &:hover {
       background: var(--bg-hover);
       border-color: var(--text-secondary);
@@ -31,6 +48,10 @@
       svg {
         opacity: 1;
       }
+
+      .formatSize {
+        opacity: 0.9;
+      }
     }
 
     svg {
@@ -38,6 +59,7 @@
       height: 1.6rem;
       opacity: 0;
       transition: opacity var(--transition-fast);
+      flex-shrink: 0;
     }
   }
 }

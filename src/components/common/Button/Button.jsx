@@ -15,6 +15,7 @@ const Button = forwardRef(({
   iconPosition = 'left',
   loading = false,
   disabled = false,
+  fullWidth = false,
   className = '',
   ...props
 }, ref) => {
@@ -22,7 +23,7 @@ const Button = forwardRef(({
   return (
     <button
       ref={ref}
-      className={`btn ${variant} ${sizeClass} ${loading ? 'loading' : ''} ${disabled ? 'disabled' : ''} ${className}`}
+      className={`btn ${variant} ${sizeClass} ${fullWidth ? 'full-width' : ''} ${loading ? 'loading' : ''} ${disabled ? 'disabled' : ''} ${className}`}
       disabled={disabled || loading}
       {...props}
     >

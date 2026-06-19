@@ -1,0 +1,64 @@
+.drop-zone {
+  border: 2px dashed var(--border-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-4);
+  text-align: center;
+  cursor: default;
+  transition: all var(--transition-base);
+  background: var(--bg-surface);
+
+  &.dragging {
+    border-color: var(--color-primary);
+    background: rgba(99, 102, 241, 0.05);
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+  }
+
+  .drop-zone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .drop-icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    color: var(--text-muted);
+    transition: all var(--transition-base);
+
+    &.active {
+      color: var(--color-primary);
+      animation: pulse 1s ease-in-out infinite;
+    }
+  }
+
+  .drop-text {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .drop-zone {
+    padding: var(--space-4);
+
+    .drop-icon {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
+  }
+}

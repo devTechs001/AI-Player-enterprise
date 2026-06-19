@@ -165,7 +165,7 @@
   }
 
   // Light theme adjustments
-  :global([data-theme="light"]) {
+  [data-theme="light"] {
     .toast {
       background: rgba(255, 255, 255, 0.95);
       border-color: rgba(0, 0, 0, 0.1);
@@ -198,7 +198,7 @@
   }
 
   // Neon theme adjustments
-  :global([data-theme="neon"]) {
+  [data-theme="neon"] {
     .toast {
       background: rgba(10, 10, 10, 0.95);
       border-color: var(--neon-cyan);

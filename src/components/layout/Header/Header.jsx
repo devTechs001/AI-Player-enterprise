@@ -44,7 +44,7 @@ const navItems = [
   { path: '/download', label: 'Download', icon: FiDownload },
   { path: '/library', label: 'Library', icon: FiFolder },
   { path: '/music', label: 'Music', icon: FiMusic },
-  { path: '/subscription/plans', label: 'Pricing' },
+  { path: '/pricing', label: 'Pricing' },
 ];
 
 const userMenuItems = [
@@ -192,10 +192,10 @@ const Header = () => {
                 </AnimatePresence>
               </div>
 
-              {/* User Menu */}
-              <div className={styles.userMenu} ref={userMenuRef}>
+              {/* User Menu (Drawer) */}
+              <div className={styles.userMenu}>
                 <button
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  onClick={() => setIsUserMenuOpen(true)}
                   className={styles.userBtn}
                 >
                   <Avatar
@@ -209,68 +209,83 @@ const Header = () => {
 
                 <AnimatePresence>
                   {isUserMenuOpen && (
-                    <motion.div
-                      className={styles.dropdown}
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      {/* User Info */}
-                      <div className={styles.userInfo}>
-                        <Avatar src={user?.avatar} name={user?.name} size="md" />
-                        <div>
-                          <p className={styles.name}>{user?.name}</p>
-                          <p className={styles.email}>{user?.email}</p>
-                          <Badge variant={user?.subscription?.plan === 'pro' ? 'primary' : 'secondary'}>
-                            {user?.subscription?.plan || 'Free'}
-                          </Badge>
-                        </div>
-                      </div>
-
-                      <div className={styles.divider} />
-
-                      {/* Menu Items */}
-                      <div className={styles.menuItems}>
-                        {userMenuItems.map((item) => (
-                          <Link
-                            key={item.path}
-                            to={item.path}
-                            className={styles.menuItem}
+                    <>
+                      <motion.div
+                        className={styles.drawerOverlay}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsUserMenuOpen(false)}
+                      />
+                      <motion.div
+                        className={styles.drawer}
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                      >
+                        {/* Drawer Header */}
+                        <div className={styles.drawerHeader}>
+                          <h3>Menu</h3>
+                          <button
+                            className={styles.drawerCloseBtn}
                             onClick={() => setIsUserMenuOpen(false)}
                           >
-                            <item.icon />
-                            {item.label}
-                          </Link>
-                        ))}
+                            <FiX />
+                          </button>
+                        </div>
 
-                        {/* Admin Link */}
-                        {hasRole(['admin', 'superadmin']) && (
-                          <>
-                            <div className={styles.divider} />
-                            <Link
-                              to="/admin"
-                              className={`${styles.menuItem} ${styles.admin}`}
-                              onClick={() => setIsUserMenuOpen(false)}
-                            >
-                              <FiShield />
-                              Admin Panel
-                            </Link>
-                          </>
-                        )}
-                      </div>
+                        <div className={styles.drawerContent}>
+                          {/* User Info */}
+                          <div className={styles.userInfo}>
+                            <Avatar src={user?.avatar} name={user?.name} size="md" />
+                            <div className={styles.userDetails}>
+                              <p className={styles.name}>{user?.name}</p>
+                              <p className={styles.email}>{user?.email}</p>
+                              <Badge variant={user?.subscription?.plan === 'pro' ? 'primary' : 'secondary'}>
+                                {user?.subscription?.plan || 'Free'}
+                              </Badge>
+                            </div>
+                          </div>
 
-                      <div className={styles.divider} />
+                          {/* Menu Items */}
+                          <div className={styles.menuItems}>
+                            {userMenuItems.map((item) => (
+                              <Link
+                                key={item.path}
+                                to={item.path}
+                                className={styles.menuItem}
+                                onClick={() => setIsUserMenuOpen(false)}
+                              >
+                                <item.icon />
+                                {item.label}
+                              </Link>
+                            ))}
 
-                      {/* Logout */}
-                      <button
-                        onClick={handleLogout}
-                        className={`${styles.menuItem} ${styles.logout}`}
-                      >
-                        <FiLogOut />
-                        Logout
-                      </button>
-                    </motion.div>
+                            {/* Admin Link */}
+                            {hasRole(['admin', 'superadmin']) && (
+                              <Link
+                                to="/admin"
+                                className={`${styles.menuItem} ${styles.admin}`}
+                                onClick={() => setIsUserMenuOpen(false)}
+                              >
+                                <FiShield />
+                                Admin Panel
+                              </Link>
+                            )}
+                          </div>
+
+                          {/* Logout */}
+                          <button
+                            onClick={handleLogout}
+                            className={`${styles.menuItem} ${styles.logout}`}
+                          >
+                            <FiLogOut />
+                            Logout
+                          </button>
+                        </div>
+                      </motion.div>
+                    </>
                   )}
                 </AnimatePresence>
               </div>
@@ -305,60 +320,83 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (Drawer) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            className={styles.mobileMenu}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            {/* Mobile Search */}
-            <form onSubmit={handleSearch} className={styles.mobileSearch}>
-              <FiSearch />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </form>
-
-            {/* Mobile Nav Items */}
-            <nav className={styles.mobileNav}>
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`${styles.mobileNavLink} ${location.pathname === item.path ? styles.active : ''}`}
+          <>
+            <motion.div
+              className={styles.mobileOverlay}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <motion.div
+              className={styles.mobileDrawer}
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            >
+              <div className={styles.drawerHeader}>
+                <h3>Navigation</h3>
+                <button
+                  className={styles.drawerCloseBtn}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item.icon && <item.icon />}
-                  {item.label}
-                </Link>
-              ))}
-              <Link to="/devs" className={styles.mobileNavLink}>
-                <FiCode />
-                Developers
-              </Link>
-            </nav>
-
-            {/* Mobile Auth */}
-            {!isAuthenticated && (
-              <div className={styles.mobileAuth}>
-                <Link to="/login">
-                  <Button variant="secondary" fullWidth>
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="primary" fullWidth>
-                    Sign Up
-                  </Button>
-                </Link>
+                  <FiX />
+                </button>
               </div>
-            )}
-          </motion.div>
+
+              <div className={styles.drawerContent}>
+                {/* Mobile Search */}
+                <form onSubmit={handleSearch} className={styles.mobileSearch}>
+                  <FiSearch />
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </form>
+
+                {/* Mobile Nav Items */}
+                <nav className={styles.mobileNav}>
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`${styles.mobileNavLink} ${location.pathname === item.path ? styles.active : ''}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.icon && <item.icon />}
+                      {item.label}
+                    </Link>
+                  ))}
+                  <Link to="/devs" className={styles.mobileNavLink} onClick={() => setIsMobileMenuOpen(false)}>
+                    <FiCode />
+                    Developers
+                  </Link>
+                </nav>
+
+                {/* Mobile Auth */}
+                {!isAuthenticated && (
+                  <div className={styles.mobileAuth}>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="secondary" fullWidth>
+                        Login
+                      </Button>
+                    </Link>
+                    <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="primary" fullWidth>
+                        Sign Up
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

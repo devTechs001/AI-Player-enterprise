@@ -1,7 +1,7 @@
 // Main Styles Entry Point
 
 // Design tokens (colors, spacing, shadows, themes)
-@import './variables';
+@use './variables';
 
 // Base styles
 * {

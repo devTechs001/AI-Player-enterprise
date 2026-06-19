@@ -171,6 +171,12 @@
     }
   }
 
+  // Modifiers
+  &.full-width {
+    width: 100%;
+    display: flex;
+  }
+
   // States
   &.loading {
     cursor: not-allowed;

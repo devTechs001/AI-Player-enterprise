@@ -1,0 +1,45 @@
+services:
+  # ── Frontend (Static Site) ──────────────────────────────
+  - type: web
+    name: ultimate-player
+    runtime: static
+    repo: https://github.com/anomalyco/ultimate-player
+    branch: main
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: VITE_API_URL
+        value: https://ultimate-player-api.onrender.com
+
+  # ── Backend (Node.js Web Service) ───────────────────────
+  - type: web
+    name: ultimate-player-api
+    runtime: node
+    repo: https://github.com/anomalyco/ultimate-player
+    branch: main
+    buildCommand: npm install --prefix server
+    startCommand: npm start --prefix server
+    healthCheckPath: /api/health
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 10000

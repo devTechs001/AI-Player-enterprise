@@ -217,7 +217,7 @@
   }
 
   // Light theme adjustments
-  :global([data-theme="light"]) {
+  [data-theme="light"] {
     .modal-overlay {
       background: rgba(255, 255, 255, 0.8);
     }
@@ -247,7 +247,7 @@
   }
 
   // Neon theme adjustments
-  :global([data-theme="neon"]) {
+  [data-theme="neon"] {
     .modal-overlay {
       background: rgba(5, 5, 5, 0.8);
     }

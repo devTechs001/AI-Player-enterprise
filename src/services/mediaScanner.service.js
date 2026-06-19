@@ -5,32 +5,33 @@ class LocalMediaScanner {
       audio: ['mp3', 'aac', 'wav', 'flac', 'ogg', 'm4a', 'wma'],
       image: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'],
     };
+
+    this.wellKnownDirs = {
+      videos: 'videos',
+      music: 'music',
+      pictures: 'pictures',
+      documents: 'documents',
+      downloads: 'downloads',
+    };
   }
 
-  /**
-   * Scan local files using File System Access API
-   */
-  async scanDirectory() {
-    try {
-      // Request directory handle
-      const dirHandle = await window.showDirectoryPicker();
-      const files = [];
-      
-      // Iterate through directory entries
-      for await (const entry of dirHandle.values()) {
-        if (entry.kind === 'file') {
-          const file = await entry.getFile();
-          const fileInfo = await this.analyzeFile(file, entry);
-          
-          if (fileInfo) {
-            files.push(fileInfo);
-          }
-        }
+  async _iterateDirHandle(dirHandle) {
+    const files = [];
+    for await (const entry of dirHandle.values()) {
+      if (entry.kind === 'file') {
+        const file = await entry.getFile();
+        const fileInfo = await this.analyzeFile(file, entry);
+        if (fileInfo) files.push(fileInfo);
       }
-      
-      // Sort by date modified (newest first)
+    }
+    return files;
+  }
+
+  async _scanWellKnownDir(type) {
+    try {
+      const dirHandle = await window.showDirectoryPicker({ startIn: type });
+      const files = await this._iterateDirHandle(dirHandle);
       files.sort((a, b) => b.lastModified - a.lastModified);
-      
       return {
         success: true,
         files,
@@ -38,26 +39,140 @@ class LocalMediaScanner {
         totalSize: files.reduce((sum, f) => sum + f.size, 0),
       };
     } catch (error) {
-      console.error('Failed to scan directory:', error);
+      if (error.name === 'AbortError') {
+        return { success: false, error: 'cancelled', files: [] };
+      }
+      return { success: false, error: error.message, files: [] };
+    }
+  }
+
+  async scanGallery() {
+    return this._scanWellKnownDir('videos');
+  }
+
+  async scanMusic() {
+    return this._scanWellKnownDir('music');
+  }
+
+  async scanPictures() {
+    return this._scanWellKnownDir('pictures');
+  }
+
+  async scanDownloads() {
+    return this._scanWellKnownDir('downloads');
+  }
+
+  async scanDeviceMedia() {
+    const results = await Promise.allSettled([
+      this._scanWellKnownDir('videos'),
+      this._scanWellKnownDir('music'),
+      this._scanWellKnownDir('pictures'),
+    ]);
+
+    const allFiles = [];
+    let directories = [];
+    let totalSize = 0;
+
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value.success) {
+        allFiles.push(...result.value.files);
+        directories.push(result.value.directory);
+        totalSize += result.value.totalSize;
+      }
+    }
+
+    allFiles.sort((a, b) => b.lastModified - a.lastModified);
+
+    return {
+      success: allFiles.length > 0,
+      files: allFiles,
+      directories: [...new Set(directories)],
+      totalSize,
+    };
+  }
+
+  async scanDroppedFiles(dataTransfer) {
+    const files = [];
+    const items = dataTransfer.items || [];
+
+    for (const item of items) {
+      const entry = item.webkitGetAsEntry ? item.webkitGetAsEntry() : null;
+      if (entry) {
+        const scanned = await this._scanEntry(entry);
+        files.push(...scanned);
+      } else {
+        const file = item.getAsFile();
+        if (file) {
+          const fileInfo = await this.analyzeFile(file, { kind: 'file', name: file.name });
+          if (fileInfo) files.push(fileInfo);
+        }
+      }
+    }
+
+    return files;
+  }
+
+  async _scanEntry(entry) {
+    const files = [];
+    if (entry.isFile) {
+      const file = await new Promise((resolve) => entry.file(resolve));
+      const fileInfo = await this.analyzeFile(file, entry);
+      if (fileInfo) files.push(fileInfo);
+    } else if (entry.isDirectory) {
+      const reader = entry.createReader();
+      const entries = await new Promise((resolve) => {
+        reader.readEntries(resolve);
+      });
+      for (const child of entries) {
+        const children = await this._scanEntry(child);
+        files.push(...children);
+      }
+    }
+    return files;
+  }
+
+  async scanFromFileList(fileList) {
+    const files = [];
+    for (const file of fileList) {
+      const fileInfo = await this.analyzeFile(file, { kind: 'file', name: file.name });
+      if (fileInfo) files.push(fileInfo);
+    }
+    return files;
+  }
+
+  /**
+   * Scan local files using File System Access API
+   */
+  async scanDirectory() {
+    try {
+      const dirHandle = await window.showDirectoryPicker();
+      const files = await this._iterateDirHandle(dirHandle);
+      files.sort((a, b) => b.lastModified - a.lastModified);
       return {
-        success: false,
-        error: error.message,
-        files: [],
+        success: true,
+        files,
+        directory: dirHandle.name,
+        totalSize: files.reduce((sum, f) => sum + f.size, 0),
       };
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return { success: false, error: 'cancelled', files: [] };
+      }
+      return { success: false, error: error.message, files: [] };
     }
   }
 
   /**
    * Analyze individual file
    */
-  async analyzeFile(file, handle) {
+  async analyzeFile(file, handle, source = 'local') {
     const extension = file.name.split('.').pop().toLowerCase();
     const type = this.getFileType(extension);
     
     if (!type) return null;
     
     const fileInfo = {
-      id: `${handle.kind}_${file.name}_${file.lastModified}`,
+      id: `${source}_${handle.kind}_${file.name}_${file.lastModified}`,
       name: file.name,
       title: this.extractTitle(file.name),
       type,
@@ -67,6 +182,7 @@ class LocalMediaScanner {
       mimeType: file.type,
       handle: handle,
       file: file,
+      source,
       duration: null,
       thumbnail: null,
       metadata: {},

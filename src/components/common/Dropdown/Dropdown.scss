@@ -251,7 +251,7 @@
   }
 
   // Light theme adjustments
-  :global([data-theme="light"]) {
+  [data-theme="light"] {
     .dropdown-menu {
       background: rgba(255, 255, 255, 0.95);
       border-color: rgba(0, 0, 0, 0.1);
@@ -269,7 +269,7 @@
   }
 
   // Neon theme adjustments
-  :global([data-theme="neon"]) {
+  [data-theme="neon"] {
     .dropdown-menu {
       background: rgba(10, 10, 10, 0.95);
       border-color: rgba(255, 255, 255, 0.1);

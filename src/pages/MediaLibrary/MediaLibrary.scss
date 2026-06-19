@@ -6,7 +6,7 @@
   .library-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: var(--space-6);
     flex-wrap: wrap;
     gap: var(--space-4);
@@ -38,6 +38,55 @@
     .header-actions {
       display: flex;
       gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .device-scan-wrapper {
+      position: relative;
+
+      .device-scan-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: var(--space-2);
+        min-width: 22rem;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        z-index: 100;
+
+        button {
+          display: flex;
+          align-items: center;
+          gap: var(--space-3);
+          width: 100%;
+          padding: var(--space-3) var(--space-4);
+          background: transparent;
+          border: none;
+          color: var(--text-primary);
+          font-size: var(--text-sm);
+          cursor: pointer;
+          transition: background var(--transition-fast);
+
+          svg {
+            width: 1.6rem;
+            height: 1.6rem;
+            color: var(--text-secondary);
+          }
+
+          &:hover {
+            background: var(--bg-hover);
+          }
+        }
+
+        .menu-divider {
+          height: 1px;
+          background: var(--border-primary);
+          margin: var(--space-1) 0;
+        }
+      }
     }
   }
 
@@ -373,6 +422,21 @@
             font-weight: 600;
             border-radius: var(--radius-md);
             font-family: var(--font-family-mono);
+          }
+
+          .platform-badge {
+            position: absolute;
+            top: var(--space-2);
+            left: var(--space-2);
+            width: 2.8rem;
+            height: 2.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
           }
         }
 

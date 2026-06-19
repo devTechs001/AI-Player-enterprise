@@ -1,14 +1,10 @@
 import { useContext } from 'react';
-import DownloadContext from '@context/DownloadContext';
+import { DownloadContext } from '@context/DownloadContext';
 
 export const useDownload = () => {
   const context = useContext(DownloadContext);
-
   if (!context) {
     throw new Error('useDownload must be used within a DownloadProvider');
   }
-
   return context;
 };
-
-export default useDownload;

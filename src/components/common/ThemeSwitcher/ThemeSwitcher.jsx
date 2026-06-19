@@ -1,20 +1,32 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiCheck, FiDroplet } from 'react-icons/fi';
+import { FiCheck, FiMoon, FiSun, FiZap, FiDroplet } from 'react-icons/fi';
 import { useTheme } from '@hooks/useTheme';
 import Tooltip from '@components/common/Tooltip';
 import styles from './ThemeSwitcher.module.scss';
 
+const THEME_ICONS = {
+  'dark': FiMoon,
+  'light': FiSun,
+  'neon': FiZap,
+  'dark-purple': FiDroplet,
+  'purple-blue': FiDroplet,
+  'ocean-blue': FiDroplet,
+  'sunset-orange': FiDroplet,
+  'forest-green': FiDroplet,
+  'cyberpunk': FiZap,
+};
+
 const themes = [
-  { id: 'dark', name: 'Dark', icon: '🌙', color: '#0a0a0f' },
-  { id: 'light', name: 'Light', icon: '☀️', color: '#ffffff' },
-  { id: 'neon', name: 'Neon', icon: '⚡', color: '#0d0d1a' },
-  { id: 'dark-purple', name: 'Dark Purple', icon: '🟣', color: '#0f0518' },
-  { id: 'purple-blue', name: 'Purple Blue', icon: '💜', color: '#0a0a1f' },
-  { id: 'ocean-blue', name: 'Ocean Blue', icon: '🌊', color: '#081018' },
-  { id: 'sunset-orange', name: 'Sunset Orange', icon: '🌅', color: '#1a0f0a' },
-  { id: 'forest-green', name: 'Forest Green', icon: '🌲', color: '#0a1a0f' },
-  { id: 'cyberpunk', name: 'Cyberpunk', icon: '🤖', color: '#1a1a2e' },
+  { id: 'dark', name: 'Dark', colors: ['#0f172a', '#6366f1'] },
+  { id: 'light', name: 'Light', colors: ['#ffffff', '#6366f1'] },
+  { id: 'neon', name: 'Neon', colors: ['#0a0a0a', '#00f5ff'] },
+  { id: 'dark-purple', name: 'Dark Purple', colors: ['#1a0a2e', '#a855f7'] },
+  { id: 'purple-blue', name: 'Purple Blue', colors: ['#0f172a', '#7c3aed'] },
+  { id: 'ocean-blue', name: 'Ocean Blue', colors: ['#0c1929', '#0ea5e9'] },
+  { id: 'sunset-orange', name: 'Sunset Orange', colors: ['#1a0f0a', '#f97316'] },
+  { id: 'forest-green', name: 'Forest Green', colors: ['#0a1a0f', '#22c55e'] },
+  { id: 'cyberpunk', name: 'Cyberpunk', colors: ['#1a1a2e', '#fbbf24'] },
 ];
 
 const ThemeSwitcher = () => {
@@ -22,20 +34,17 @@ const ThemeSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const currentTheme = themes.find(t => t.id === theme);
+  const CurrentIcon = currentTheme ? THEME_ICONS[currentTheme.id] : FiMoon;
 
   return (
     <div className={styles.themeSwitcher}>
-      <Tooltip content="Change Theme">
+      <Tooltip content={currentTheme?.name || 'Change Theme'}>
         <button
           className={styles.themeButton}
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Change theme"
         >
-          <FiDroplet />
-          {currentTheme && (
-            <span className={styles.currentTheme}>
-              {currentTheme.icon}
-            </span>
-          )}
+          <CurrentIcon />
         </button>
       </Tooltip>
 
@@ -58,30 +67,33 @@ const ThemeSwitcher = () => {
               </div>
 
               <div className={styles.themeGrid}>
-                {themes.map((t) => (
-                  <motion.button
-                    key={t.id}
-                    className={`${styles.themeOption} ${theme === t.id ? styles.active : ''}`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                      setTheme(t.id);
-                      setIsOpen(false);
-                    }}
-                  >
-                    <div
-                      className={styles.themePreview}
-                      style={{ backgroundColor: t.color }}
-                    />
-                    <span className={styles.themeIcon}>{t.icon}</span>
-                    <span className={styles.themeName}>{t.name}</span>
-                    {theme === t.id && (
-                      <div className={styles.checkmark}>
-                        <FiCheck />
-                      </div>
-                    )}
-                  </motion.button>
-                ))}
+                  {themes.map((t) => {
+                    const Icon = THEME_ICONS[t.id];
+                    return (
+                      <motion.button
+                        key={t.id}
+                        className={`${styles.themeOption} ${theme === t.id ? styles.active : ''}`}
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => {
+                          setTheme(t.id);
+                          setIsOpen(false);
+                        }}
+                      >
+                        <div className={styles.themePreview}>
+                          <span className={styles.swatchPrimary} style={{ background: t.colors[0] }} />
+                          <span className={styles.swatchAccent} style={{ background: t.colors[1] }} />
+                        </div>
+                        <Icon className={styles.themeIcon} />
+                        <span className={styles.themeName}>{t.name}</span>
+                        {theme === t.id && (
+                          <div className={styles.checkmark}>
+                            <FiCheck />
+                          </div>
+                        )}
+                      </motion.button>
+                    );
+                  })}
               </div>
             </motion.div>
           </>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   FiFolder,
@@ -17,18 +17,25 @@ import {
   FiClock,
   FiHardDrive,
   FiCalendar,
+  FiCamera,
+  FiSmartphone,
+  FiUploadCloud,
 } from 'react-icons/fi';
 import { useMediaLibrary } from '@hooks/useMediaLibrary';
 import { useNavigate } from 'react-router-dom';
 import Button from '@components/common/Button';
 import Loader from '@components/common/Loader';
+import DropZone from '@components/common/DropZone/DropZone';
+import { getPlatformIcon, getFormatStyle } from '@utils/platformIcons';
 import './MediaLibrary.scss';
 
 const MediaLibrary = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState('grid'); // grid or list
+  const [viewMode, setViewMode] = useState('grid');
   const [showFilters, setShowFilters] = useState(false);
-  
+  const [showDeviceMenu, setShowDeviceMenu] = useState(false);
+  const fileInputRef = useRef(null);
+
   const {
     files,
     isLoading,
@@ -38,25 +45,40 @@ const MediaLibrary = () => {
     searchQuery,
     downloadHistory,
     scanDirectory,
+    scanGallery,
+    scanMusic,
+    scanPictures,
+    scanDownloads,
+    scanDeviceMedia,
     importFiles,
+    importDroppedFiles,
     removeFile,
     setFilters,
     setSearchQuery,
     playFile,
   } = useMediaLibrary();
 
-  const handleScanDirectory = async () => {
-    await scanDirectory();
-  };
-
-  const handleImportFiles = async () => {
-    await importFiles(true);
-  };
-
   const handlePlayFile = (file) => {
     const { media } = playFile(file);
     navigate('/player', { state: { media } });
   };
+
+  const handleDrop = useCallback(async (dataTransfer) => {
+    await importDroppedFiles(dataTransfer);
+  }, [importDroppedFiles]);
+
+  const handleFileInput = useCallback(async (e) => {
+    const fileList = e.target.files;
+    if (fileList && fileList.length > 0) {
+      // Create a DataTransfer-like object for the scanner
+      const dt = new DataTransfer();
+      for (const file of fileList) {
+        dt.items.add(file);
+      }
+      await importDroppedFiles(dt);
+    }
+    e.target.value = '';
+  }, [importDroppedFiles]);
 
   const formatBytes = (bytes) => {
     if (bytes === 0) return '0 B';
@@ -78,28 +100,27 @@ const MediaLibrary = () => {
 
   const getFileIcon = (type) => {
     switch (type) {
-      case 'video':
-        return <FiVideo />;
-      case 'audio':
-        return <FiMusic />;
-      case 'image':
-        return <FiImage />;
-      default:
-        return <FiFile />;
+      case 'video': return <FiVideo />;
+      case 'audio': return <FiMusic />;
+      case 'image': return <FiImage />;
+      default: return <FiFile />;
     }
   };
 
-  const getTypeColor = (type) => {
-    switch (type) {
-      case 'video':
-        return 'video';
-      case 'audio':
-        return 'audio';
-      case 'image':
-        return 'image';
-      default:
-        return '';
-    }
+  const getPlatformBadge = (file) => {
+    const platform = file.platform || file.source;
+    const config = getPlatformIcon(platform);
+    if (!config) return null;
+    const Icon = config.icon;
+    return (
+      <span
+        className="platform-badge"
+        style={{ backgroundColor: config.color }}
+        title={config.label}
+      >
+        <Icon />
+      </span>
+    );
   };
 
   return (
@@ -123,20 +144,64 @@ const MediaLibrary = () => {
           animate={{ opacity: 1, y: 0 }}
           className="header-actions"
         >
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept="video/*,audio/*,image/*"
+            onChange={handleFileInput}
+            style={{ display: 'none' }}
+          />
+          <Button
+            variant="secondary"
+            icon={<FiUploadCloud />}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Browse Files
+          </Button>
           <Button
             variant="primary"
             icon={<FiPlus />}
-            onClick={handleImportFiles}
+            onClick={() => importFiles(true)}
           >
             Import Files
           </Button>
-          <Button
-            variant="secondary"
-            icon={<FiFolder />}
-            onClick={handleScanDirectory}
-          >
-            Scan Folder
-          </Button>
+          <div className="device-scan-wrapper">
+            <Button
+              variant="secondary"
+              icon={<FiSmartphone />}
+              onClick={() => setShowDeviceMenu(!showDeviceMenu)}
+            >
+              Device Storage
+            </Button>
+            {showDeviceMenu && (
+              <motion.div
+                className="device-scan-menu"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <button onClick={() => { scanGallery(); setShowDeviceMenu(false); }}>
+                  <FiVideo /> Videos
+                </button>
+                <button onClick={() => { scanMusic(); setShowDeviceMenu(false); }}>
+                  <FiMusic /> Music
+                </button>
+                <button onClick={() => { scanPictures(); setShowDeviceMenu(false); }}>
+                  <FiCamera /> Pictures
+                </button>
+                <button onClick={() => { scanDownloads(); setShowDeviceMenu(false); }}>
+                  <FiDownload /> Downloads
+                </button>
+                <div className="menu-divider" />
+                <button onClick={() => { scanDeviceMedia(); setShowDeviceMenu(false); }}>
+                  <FiSmartphone /> All Media
+                </button>
+                <button onClick={() => { scanDirectory(); setShowDeviceMenu(false); }}>
+                  <FiFolder /> Browse Folder
+                </button>
+              </motion.div>
+            )}
+          </div>
         </motion.div>
       </div>
 
@@ -269,6 +334,9 @@ const MediaLibrary = () => {
         </motion.div>
       )}
 
+      {/* Drop Zone */}
+      <DropZone onDrop={handleDrop} />
+
       {/* Content */}
       <div className="library-content">
         {isLoading ? (
@@ -284,8 +352,8 @@ const MediaLibrary = () => {
           <div className="empty-state">
             <FiFolder />
             <h3>No Media Files</h3>
-            <p>Import files or scan a directory to get started</p>
-            <Button variant="primary" icon={<FiPlus />} onClick={handleImportFiles}>
+            <p>Import files, scan device storage, or drop files here to get started</p>
+            <Button variant="primary" icon={<FiPlus />} onClick={() => importFiles(true)}>
               Import Files
             </Button>
           </div>
@@ -294,7 +362,7 @@ const MediaLibrary = () => {
             {files.map((file, index) => (
               <motion.div
                 key={file.id}
-                className={`media-card ${getTypeColor(file.type)}`}
+                className={`media-card ${file.type}`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.05 }}
@@ -315,17 +383,18 @@ const MediaLibrary = () => {
                       <FiPlay />
                     </button>
                   </div>
-                  {file.duration && (
+                  {file.duration > 0 && (
                     <span className="duration-badge">
                       {formatDuration(file.duration)}
                     </span>
                   )}
+                  {getPlatformBadge(file)}
                 </div>
 
                 <div className="media-info">
                   <h3 title={file.title}>{file.title}</h3>
                   <div className="media-meta">
-                    <span className="file-type">{file.extension.toUpperCase()}</span>
+                    <span className="file-type">{file.extension?.toUpperCase() || 'N/A'}</span>
                     <span className="file-size">{formatBytes(file.size)}</span>
                   </div>
                   <div className="media-date">
@@ -357,22 +426,29 @@ const MediaLibrary = () => {
             Recent Downloads
           </h2>
           <div className="history-list">
-            {downloadHistory.slice(0, 5).map((download, index) => (
-              <div key={index} className="history-item">
-                <div className="history-icon">
-                  {getFileIcon(download.platform || 'video')}
+            {downloadHistory.slice(0, 5).map((download, index) => {
+              const platformConfig = getPlatformIcon(download.platform);
+              const IconComponent = platformConfig?.icon || FiDownload;
+              return (
+                <div key={index} className="history-item">
+                  <div
+                    className="history-icon"
+                    style={platformConfig ? { backgroundColor: platformConfig.color } : {}}
+                  >
+                    <IconComponent />
+                  </div>
+                  <div className="history-info">
+                    <span className="history-title">{download.title || download.filename}</span>
+                    <span className="history-date">
+                      {new Date(download.timestamp).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="history-status">
+                    <span className="status completed">Completed</span>
+                  </div>
                 </div>
-                <div className="history-info">
-                  <span className="history-title">{download.title || download.filename}</span>
-                  <span className="history-date">
-                    {new Date(download.timestamp).toLocaleString()}
-                  </span>
-                </div>
-                <div className="history-status">
-                  <span className="status completed">Completed</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

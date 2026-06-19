@@ -1,131 +1,81 @@
-# AI-Player-enterprise
+# AI Ultimate Player
 
-A comprehensive, enterprise-grade AI-powered video player and downloader built with React 18 and Vite.
+Enterprise-grade AI-powered video player and universal downloader built with React 18 + Vite.
 
-## ✨ Features
-
-### 🎥 Video Player
-- AI-enhanced video playback
-- Support for 4K/8K quality
-- Picture-in-Picture mode
-- Theater mode
-- Keyboard shortcuts
-- Chapters & timeline markers
-- Multiple audio tracks
-- Subtitle support (SRT, VTT, ASS)
-- Playback speed control
-- Video effects & filters
-
-### 📥 Universal Downloader
-- Support for 1000+ platforms
-- 50+ output formats
-- Batch downloading
-- Download queue
-- Format conversion
-- Audio extraction
-- Subtitle download
-- Quality selection (up to 8K)
-- Resume interrupted downloads
-- Schedule downloads
-
-### 🤖 AI Features
-- Smart recommendations
-- Auto-generated subtitles
-- Content analysis
-- Scene detection
-- Object recognition
-- Face detection
-- Sentiment analysis
-- Voice commands
-- AI video enhancement
-
-### 👥 Collaboration
-- Watch parties
-- Real-time sync
-- Live chat
-- Reactions
-- Shared playlists
-- Screen sharing
-
-### 🎵 Music Player
-- Full music library
-- Playlists management
-- Audio visualizer
-- Lyrics display
-- Radio mode
-- Equalizer
-
-### 🔐 Authentication
-- Email/password login
-- Social login (Google, GitHub, Apple)
-- Two-factor authentication
-- Guest mode with limitations
-- Role-based access control
-
-### 💼 Admin Panel
-- User management
-- Content moderation
-- Analytics dashboard
-- System health monitoring
-- Audit logs
-- API management
-
-### 💳 Subscriptions
-- Multiple plans (Free, Pro, Enterprise)
-- Stripe integration
-- Usage-based billing
-- Invoice generation
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-
-### Installation
+## Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/ai-video-player.git
-
-# Navigate to project
-cd ai-video-player
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+npm install && npm run dev
 ```
 
-### Environment Variables
-Create a .env file:
-```env
-VITE_API_URL=http://localhost:3001/api
-VITE_WS_URL=ws://localhost:3001
-VITE_GOOGLE_CLIENT_ID=your_google_client_id
-VITE_GITHUB_CLIENT_ID=your_github_client_id
-VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
-```
+## ✅ Progress Made
 
-## 📁 Project Structure
-See the document structure section above for complete file organization.
+### Real Download Engine (No Simulation)
+- **YouTube oEmbed metadata**: Fetches real title, author, thumbnail via `youtube.com/oembed` (no API key)
+- **Real download via redirect**: Opens `api.vevioz.com/api/button/videos/VIDEO_ID` — browser handles actual download natively
+- **Smart fallback chain**: oEmbed → page scrape → URL parsing (never fake 50MB)
+- **Dynamic file size calculation**: Estimated from duration × bitrate per quality level
+- **Format/Quality sizes**: Shows realistic file size per option
+- **Screen Wake Lock**: `useWakeLock` hook keeps screen awake during processing
 
-## 🛠️ Tech Stack
-- Frontend: React 18, Vite
-- State Management: Redux Toolkit, React Query
-- Styling: SCSS Modules
-- Animation: Framer Motion
-- Forms: React Hook Form, Zod
-- Video: React Player, Video.js
-- Audio: Howler.js, WaveSurfer.js
-- AI: TensorFlow.js, Tesseract.js
-- Media Processing: FFmpeg.wasm
-- Real-time: Socket.io
-- Charts: Recharts
+### UI & UX
+- **Side drawer** (replaces dropdown): Spring animation, overlay backdrop blur, close button, touch-friendly
+- **Device storage scanning**: `scanGallery()`, `scanMusic()`, `scanPictures()`, `scanDownloads()` using `showDirectoryPicker` with well-known dirs
+- **Drag-and-drop**: DropZone component for dropping files into library
+- **Platform badge icons**: Real YouTube/Instagram/TikTok/Twitter/Facebook/SoundCloud/Vimeo/Twitch icons on media cards
+- **PWA**: Manifest, service worker, beforeinstallprompt hook (`usePWA`), install banner
+- **Auto-update service**: Hourly GitHub release check with semver comparison
+- **Network status hook**: `useNetworkStatus` reports online/offline, connection type, downlink
+- **Permissions system**: Reusable `usePermissions` hook matching Flutter's `permission_handler` API
+- **Mobile responsive**: Drawer 100% width on <480px, stat grid, format chips, side drawer with overlay tap dismiss
 
-## 📄 License
-MIT License - see LICENSE file for details.
+### Deployment Configs
+- `render.yaml` — Render.com static site with SPA rewrite
+- `netlify.toml` — Netlify deploy with caching headers and SPA redirect
+- `.github/workflows/deploy.yml` — GitHub Actions → GitHub Pages
 
-## 🤝 Contributing
-Contributions are welcome! Please read our contributing guidelines first.# AI-Player-enterprise
+### Infrastructure
+- Vite 8 with `@vitejs/plugin-react` v6
+- `:global` cleanup in non-module SCSS files
+- IndexedDB version conflict fix (reuse `_dbPromise`)
+
+## 📋 Remaining Work
+
+### High Priority
+- [ ] **Production PWA icons**: Replace placeholder 1×1 PNGs with real 192×192 and 512×512 maskable icons
+- [ ] **Service worker**: Register and cache strategy for offline support
+- [ ] **End-to-end tests**: Playwright tests (`npm run test:e2e`)
+- [ ] **CI pipeline**: Add lint + typecheck + test steps to GitHub Actions
+- [ ] **Custom backend API**: Deploy a Node.js/yt-dlp backend for real direct downloads with progress
+
+### Medium Priority
+- [ ] **Video player page**: Wire up `/player/video/:id` and `/player/music/:id` routes
+- [ ] **Media preview**: Full-screen gallery component
+- [ ] **Auth pages**: Wire forms to real API
+- [ ] **Keyboard shortcuts**: Play/pause, volume, fullscreen
+
+### Low Priority
+- [ ] **Music player**: Howler.js playback for `/music/*` routes
+- [ ] **Collaboration**: Socket.io watch parties
+- [ ] **Admin dashboard**: User management, content moderation
+- [ ] **i18n translations**: Complete locale files
+- [ ] **Dark/Neon themes**: Polish remaining theme overrides
+
+## Tech Stack
+
+| Layer | Tech |
+|-------|------|
+| Framework | React 18, Vite 8 |
+| State | Redux Toolkit, React Query, Zustand |
+| Routing | React Router v6 (lazy routes) |
+| Styling | SCSS Modules, CSS custom properties |
+| Animation | Framer Motion |
+| Forms | React Hook Form + Zod |
+| Video | React Player, Video.js |
+| Audio | Howler.js, WaveSurfer.js |
+| AI | TensorFlow.js, Tesseract.js |
+| Media | FFmpeg.wasm |
+| Real-time | Socket.io |
+| Icons | react-icons (Feather, FontAwesome, SimpleIcons) |
+| Charts | Recharts |
+| Testing | Vitest, Playwright |

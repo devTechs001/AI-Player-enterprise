@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [
     react({
       jsxRuntime: 'automatic',
+      include: '**/*.{jsx,tsx}',
     }),
   ],
   resolve: {
@@ -26,10 +27,22 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    strictPort: false,
     host: true,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+    },
   },
   build: {
-    rollupOptions: {
+    chunkSizeWarningLimit: 600,
+    rolldownOptions: {
       output: {
         manualChunks: (id) => {
           if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
@@ -43,12 +56,9 @@ export default defineConfig({
       },
     },
   },
-  
   optimizeDeps: {
-    rolldownOptions: {
-      exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
-      include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
-      force: true,
-    },
+    exclude: ['@ffmpeg/ffmpeg', '@ffmpeg/util'],
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+    force: true,
   },
 })
