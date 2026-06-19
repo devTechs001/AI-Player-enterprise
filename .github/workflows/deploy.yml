@@ -37,6 +37,8 @@ jobs:
         run: npm run build
         env:
           CI: false
+          VITE_API_BASE_URL: https://ultimate-player-api.onrender.com/api
+          VITE_API_URL: https://ultimate-player-api.onrender.com
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

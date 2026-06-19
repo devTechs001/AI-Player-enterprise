@@ -1,6 +1,7 @@
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import downloadAPI from '@api/download.api';
+import { API_ENDPOINTS } from '@config/constants';
 
 class DownloadService {
   constructor() {
@@ -433,7 +434,7 @@ class DownloadService {
   // ── Local Backend API ──────────────────────────────────
   async _analyzeViaBackend(url) {
     try {
-      const res = await fetch('/api/info', {
+      const res = await fetch(`${API_ENDPOINTS.BASE_URL}/info`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url }),
@@ -531,7 +532,7 @@ class DownloadService {
     const size = formatInfo.contentLength || 0;
 
     // Stream through our proxy which adds proper browser headers
-    const proxyUrl = `/api/download?url=${encodeURIComponent(cdnUrl)}&filename=${encodeURIComponent(filename)}&mime=${encodeURIComponent(mime)}&size=${size}`;
+    const proxyUrl = `${API_ENDPOINTS.BASE_URL}/download?url=${encodeURIComponent(cdnUrl)}&filename=${encodeURIComponent(filename)}&mime=${encodeURIComponent(mime)}&size=${size}`;
     const response = await fetch(proxyUrl, { signal });
 
     if (!response.ok) {

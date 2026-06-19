@@ -25,6 +25,8 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 20
+      - key: VITE_API_BASE_URL
+        value: https://ultimate-player-api.onrender.com/api
       - key: VITE_API_URL
         value: https://ultimate-player-api.onrender.com
 

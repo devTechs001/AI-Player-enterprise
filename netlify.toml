@@ -4,6 +4,13 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  VITE_API_BASE_URL = "https://ultimate-player-api.onrender.com/api"
+  VITE_API_URL = "https://ultimate-player-api.onrender.com"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://ultimate-player-api.onrender.com/api/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"
