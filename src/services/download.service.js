@@ -35,10 +35,12 @@ class DownloadService {
       const platform = this.detectPlatform(url);
       const title = this.generateTitleFromURL(url, platform);
       
+      const thumbnailColors = { instagram: '1a1a2e, e94560', youtube: '0f0f0f, ff0000', vimeo: '1a1a2e, 00adef', tiktok: '1a1a2e, ff0050', twitter: '1a1a2e, 1da1f2', facebook: '1a1a2e, 4267b2', unknown: '1a1a2e, 6366f1' };
+      const colors = thumbnailColors[platform] || thumbnailColors.unknown;
       const isHD = platform !== 'unknown';
       return {
         title: title,
-        thumbnail: 'https://via.placeholder.com/320x180',
+        thumbnail: `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="320" height="180" viewBox="0 0 320 180"%3E%3Cdefs%3E%3ClinearGradient id="g" x1="0%25" y1="0%25" x2="100%25" y2="100%25"%3E%3Cstop offset="0%25" style="stop-color:%23${colors.split(',')[0]}" /%3E%3Cstop offset="100%25" style="stop-color:%23${colors.split(',')[1]}" /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill="url(%23g)" width="320" height="180"/%3E%3Ctext fill="white" font-family="Arial" font-size="24" font-weight="bold" x="50%25" y="50%25" text-anchor="middle" dominant-baseline="middle"%3E${platform?.toUpperCase() || 'VIDEO'}%3C/text%3E%3C/svg%3E`,
         duration: platform === 'instagram' ? 60 : platform === 'youtube' ? 420 : 180,
         fileSize: platform === 'instagram' ? 15 * 1024 * 1024 : 50 * 1024 * 1024,
         bestQuality: '1080p',

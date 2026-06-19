@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import { useTheme } from '@hooks/useTheme'
 import { useAuth } from '@hooks/useAuth'
+import { RefreshProvider } from '@context/RefreshContext'
 import { routes } from './routes'
 import Splash from '@pages/Splash'
 import Loader from '@components/common/Loader'
@@ -27,6 +28,7 @@ const App = () => {
 
   return (
     <div className={`app ${theme} min-h-screen bg-dark-950 text-white`}>
+      <RefreshProvider>
       <Suspense fallback={<Loader fullPage />}>
         <Routes>
           {routes.map((route, index) => (
@@ -47,6 +49,7 @@ const App = () => {
           ))}
         </Routes>
       </Suspense>
+      </RefreshProvider>
     </div>
   )
 }

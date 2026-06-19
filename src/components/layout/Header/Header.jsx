@@ -34,6 +34,7 @@ import Badge from '@components/common/Badge';
 import SearchBar from '@components/common/SearchBar';
 import Button from '@components/common/Button';
 import ThemeSwitcher from '@components/common/ThemeSwitcher';
+import RefreshButton from '@components/common/RefreshButton/RefreshButton';
 import NotificationDropdown from './NotificationDropdown';
 import styles from './Header.module.scss';
 
@@ -164,6 +165,9 @@ const Header = () => {
 
         {/* Right Section */}
         <div className={styles.rightSection}>
+          {/* Refresh */}
+          <RefreshButton size="sm" />
+
           {/* Theme Switcher */}
           <ThemeSwitcher />
 
