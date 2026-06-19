@@ -87,7 +87,32 @@ const DownloadModal = ({ isOpen, onClose, url, initialFormat = 'mp4' }) => {
     setAnalyzeProgress(0);
     setAnalyzeStep(0);
 
+    const stages = [
+      'Contacting server',
+      'Fetching video metadata',
+      'Extracting formats',
+      'Resolving titles',
+    ];
+
+    // Update progress in real-time while backend call runs
+    const startTime = Date.now();
+    const progressTimer = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      // Simulate progress: ~30% in first 3s, then slow to ~60% by 15s, then plateau
+      let pct;
+      if (elapsed < 3) pct = elapsed / 3 * 30;
+      else if (elapsed < 15) pct = 30 + (elapsed - 3) / 12 * 30;
+      else pct = Math.min(60 + Math.min(elapsed - 15, 30) / 30 * 30, 95);
+      setAnalyzeProgress(Math.round(pct));
+
+      const stageIdx = Math.min(Math.floor(elapsed / 3), 3);
+      setAnalyzeStep(stageIdx);
+    }, 250);
+
     const result = await analyzeURL(url);
+    clearInterval(progressTimer);
+    setAnalyzeProgress(100);
+
     if (result.success) {
       setMediaInfo({
         ...result.data,
@@ -225,7 +250,7 @@ const DownloadModal = ({ isOpen, onClose, url, initialFormat = 'mp4' }) => {
                   <span className={styles.analyzeProgressText}>{Math.round(analyzeProgress)}%</span>
                 </div>
                 <div className={styles.processingSteps}>
-                  {['Parsing URL', 'Extracting metadata', 'Detecting formats', 'Resolving titles'].map((label, i) => (
+                  {['Contacting server', 'Fetching metadata', 'Extracting formats', 'Resolving titles'].map((label, i) => (
                     <span
                       key={label}
                       className={
